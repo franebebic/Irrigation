@@ -1,0 +1,15 @@
+@startuml
+
+entity "Parcel" {
+  * id : Long
+  --
+  name : String
+}
+
+entity "Culture" {
+  * id : Long
+  --
+  name : String
+}
+
+@enduml

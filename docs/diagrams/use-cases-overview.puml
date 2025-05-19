@@ -6,10 +6,13 @@ actor User
 actor System
 
 package "Irrigation" {
-  User --> (Adding new parcel)
+  User --> (Add parcel)
+  User --> (Add culture)
+  User --> (Add hygrometer device)
+  User --> (Add valve device)
+  User --> (Measurement history overview)
   User --> (Manual irrigation)
   System --> (Automatic irrigation)
-  User --> (Measurement history overview)
 }
 
 @enduml
