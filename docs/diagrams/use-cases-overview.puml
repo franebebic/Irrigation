@@ -1,0 +1,15 @@
+@startuml
+
+left to right direction
+
+actor User
+actor System
+
+package "Irrigation" {
+  User --> (Adding new parcel)
+  User --> (Manual irrigation)
+  System --> (Automatic irrigation)
+  User --> (Measurement history overview)
+}
+
+@enduml
