@@ -14,8 +14,12 @@ A Spring Boot application that monitors soil moisture and automates garden irrig
 ## Documentation
 -[Use Case: Adding new parcel](docs/use-cases/UC1.1-add-parcel.md)
 
+
 ### Use cases
 ![Use cases](/docs/diagrams/use-cases-overview.png)
 
-## Autor
+### ER Model
+![ER Model](/docs/er-model.png)
+
+## Author
 Frane Bebić
