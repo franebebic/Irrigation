@@ -1,15 +1,74 @@
 @startuml
 
-entity "Parcel" {
+entity "Plot" {
   * id : Long
   --
   name : String
 }
 
-entity "Culture" {
+entity "Crop" {
   * id : Long
   --
   name : String
+  minMoisture : Long
+  maxMoisture : Long
 }
+
+entity "Plantation" {
+ * id : Long
+  --
+  plot_id : Long
+  crop_id : Long
+  plantingDate : date
+  plantCount : Long
+}
+
+entity "Sensor" {
+  * id : Long
+  --
+  plot_id : Long
+  name : String
+}
+
+entity "Valve" {
+  * id : Long
+  --
+  plot_id : Long
+  name : String
+}
+
+entity "Measurement" {
+  * id : Long
+  --
+  sensor_id : Long
+  plot_id : Long
+  type: ENUM [HUMIDITY, TEMPERATURE, PH]
+  measuredAt : datetime
+  measuredValue : Float
+}
+
+entity "Activity" {
+  * id : Long
+  --
+  type : ENUM [MANUAL_IRRIGATION, AUTOMATIC_IRRIGATION]
+  plot_id : Long
+  valve_id : Long
+  startTime : datetime
+  endTime : datetime
+  status : ENUM [RUNNING, EXECUTED, CANCELLED, FAILED]
+
+}
+
+Plot ||--o{ Activity: is executed by
+Valve ||--o{ Activity: is controlled by
+
+Crop ||--o{ Plantation: has
+Plot ||--o{ Plantation: has
+
+Plot ||--o{ Sensor :is measured by
+Plot ||--|| Valve : is controlled by
+
+Plot ||--o{Measurement
+Sensor ||--o{Measurement: provides data to
 
 @enduml

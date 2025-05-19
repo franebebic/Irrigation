@@ -6,10 +6,11 @@ actor User
 actor System
 
 package "Irrigation" {
-  User --> (Add parcel)
-  User --> (Add culture)
-  User --> (Add hygrometer device)
-  User --> (Add valve device)
+  User --> (Add Plot)
+  User --> (Add Crop)
+  User --> (Add Plantation)
+  User --> (Add Sensor)
+  User --> (Add Valve)
   User --> (Measurement history overview)
   User --> (Manual irrigation)
   System --> (Automatic irrigation)
