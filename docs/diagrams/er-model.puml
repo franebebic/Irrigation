@@ -28,6 +28,7 @@ entity "Sensor" {
   --
   plot_id : Long
   name : String
+  type: ENUM [HUMIDITY, TEMPERATURE, PH]
 }
 
 entity "Valve" {
@@ -41,18 +42,31 @@ entity "Measurement" {
   * id : Long
   --
   sensor_id : Long
+  sensorIdSnapshot : Long
+  sensorNameSnapshot: String
+
   plot_id : Long
+  plotIdSnapshot : Long
+  plotNameSnapshot : String
+
   type: ENUM [HUMIDITY, TEMPERATURE, PH]
   measuredAt : datetime
-  measuredValue : Float
+  measuredValue : Double
 }
 
 entity "Activity" {
   * id : Long
   --
-  type : ENUM [MANUAL_IRRIGATION, AUTOMATIC_IRRIGATION]
+  type : ENUM [MANUAL, AUTOMATIC]
+
   plot_id : Long
+  plotIdSnapshot : Long
+  plotNameSnapshot : String
+
   valve_id : Long
+  valveIdSnapshot : Long
+  valveNameSnapshot : String
+
   startTime : datetime
   endTime : datetime
   status : ENUM [RUNNING, EXECUTED, CANCELLED, FAILED]
@@ -66,9 +80,9 @@ Crop ||--o{ Plantation: has
 Plot ||--o{ Plantation: has
 
 Plot ||--o{ Sensor :is measured by
-Plot ||--|| Valve : is controlled by
+Plot ||--o| Valve : is controlled by
 
-Plot ||--o{Measurement
+Plot ||--o{Measurement : is measured on
 Sensor ||--o{Measurement: provides data to
 
 @enduml
