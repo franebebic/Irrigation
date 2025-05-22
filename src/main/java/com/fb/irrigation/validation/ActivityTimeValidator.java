@@ -8,8 +8,8 @@ public class ActivityTimeValidator implements ConstraintValidator<ValidActivityT
 
     @Override
     public boolean isValid(Activity activity, ConstraintValidatorContext constraintValidatorContext) {
-        if(activity==null) return true;
-        if(activity.getStartTime()==null || activity.getEndTime()==null) return true;
+        if (activity == null) return true;
+        if (activity.getStartTime() == null || activity.getEndTime() == null) return true;
         return activity.getStartTime().isBefore(activity.getEndTime());
-     }
+    }
 }
