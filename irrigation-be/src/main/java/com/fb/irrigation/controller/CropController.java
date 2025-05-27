@@ -17,36 +17,35 @@ public class CropController {
     private final CropService cropService;
 
     @PostMapping
-    public ResponseEntity<Crop> createCrop(@Valid @RequestBody Crop crop){
-        Crop savedCrop=cropService.save(crop);
+    public ResponseEntity<Crop> createCrop(@Valid @RequestBody Crop crop) {
+        Crop savedCrop = cropService.save(crop);
         return ResponseEntity.ok(savedCrop);
     }
 
     @GetMapping
-    public ResponseEntity<List<Crop>> getAllCrops(){
+    public ResponseEntity<List<Crop>> getAllCrops() {
         List<Crop> crops = cropService.findAll();
         return ResponseEntity.ok(crops);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Crop> getCrop(@PathVariable Long id){
+    public ResponseEntity<Crop> getCrop(@PathVariable Long id) {
         return cropService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCrop(@PathVariable Long id){
-        if(cropService.findById(id).isPresent()) {
+    public ResponseEntity<Void> deleteCrop(@PathVariable Long id) {
+        if (cropService.findById(id).isPresent()) {
             cropService.deleteById(id);
             return ResponseEntity.noContent().build();
-        }
-        else
+        } else
             return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Crop> updateCrop(@PathVariable Long id, @RequestBody Crop updatedCrop) {
+    public ResponseEntity<Crop> updateCrop(@PathVariable Long id, @Valid @RequestBody Crop updatedCrop) {
         Optional<Crop> existingCropOpt = cropService.findById(id);
         if (existingCropOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
