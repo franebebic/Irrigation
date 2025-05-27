@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fb</groupId>
-	<artifactId>irrigation</artifactId>
+	<artifactId>irrigation-be</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>irrigation</name>
 	<description>Irrigation system</description>
