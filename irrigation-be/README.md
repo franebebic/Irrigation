@@ -12,7 +12,7 @@ A Spring Boot application that monitors soil moisture and automates garden irrig
  ./mvnw spring-boot:run
 
 ## Documentation
--[Use Case: Adding new parcel](docs/use-cases/UC1.1-add-parcel.md)
+-[Use Case: Adding new parcel](../docs/use-cases/UC1.1-add-parcel.md)
 
 
 ### Use cases
