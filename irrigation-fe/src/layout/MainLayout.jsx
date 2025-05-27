@@ -1,0 +1,101 @@
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+import {
+  Leaf, Sprout, Droplets, Gauge,
+  CalendarCheck, BarChart, Map, Rss
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const sections = [
+  {
+    label: "Configuration",
+    items: [
+      { to: "/crops", label: "Crops", icon: Leaf },
+      { to: "/plantations", label: "Plantations", icon: Sprout },
+      { to: "/plots", label: "Plots", icon: Map },
+      { to: "/sensors", label: "Sensors", icon: Rss },
+      { to: "/valves", label: "Valves", icon: Droplets },
+    ],
+  },
+  {
+    label: "Monitoring",
+    items: [
+      { to: "/measurements", label: "Measurements", icon: Gauge },
+      { to: "/activities", label: "Activities", icon: CalendarCheck },
+    ],
+  },
+  {
+    label: "Analytics",
+    items: [
+      {
+        to: "http://localhost:3000/d/grafana",
+        label: "Dashboard",
+        icon: BarChart,
+        external: true,
+      },
+    ],
+  },
+];
+
+
+export default function MainLayout() {
+  const location = useLocation();
+
+  const isSectionActive = (items) =>
+    items.some((item) => location.pathname.startsWith(item.to));
+
+  return (
+    <div className="flex min-h-screen bg-muted/40">
+      <aside className="w-64 border-r bg-white p-4 shadow-sm">
+        <div className="text-2xl font-bold mb-6">🌿 Irrigation</div>
+
+        {sections.map(({ label, items }) => (
+          <div key={label} className="mb-4">
+            <div
+              className={cn(
+                "px-3 text-xs font-semibold uppercase tracking-wider mb-2 transition-colors",
+                isSectionActive(items) ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              {label}
+            </div>
+
+            <nav className="space-y-1">
+              {items.map(({ to, label, icon: Icon, external }) =>
+                external ? (
+                  <a
+                    key={to}
+                    href={to}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
+                  >
+                    <Icon className="h-5 w-5" />
+                    {label}
+                  </a>
+                ) : (
+                  <NavLink
+                    key={to}
+                    to={to}
+                    className={({ isActive }) =>
+                      cn(
+                        "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted",
+                        isActive ? "bg-muted text-primary font-semibold" : "text-muted-foreground"
+                      )
+                    }
+                  >
+                    <Icon className="h-5 w-5" />
+                    {label}
+                  </NavLink>
+                )
+              )}
+            </nav>
+          </div>
+        ))}
+      </aside>
+
+      <main className="flex-1 p-6">
+        <Outlet />
+      </main>
+    </div>
+  );
+}
