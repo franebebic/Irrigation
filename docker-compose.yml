@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: irrigation-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: irrigation
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./irrigation-be
+    container_name: irrigation-backend
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/irrigation
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./irrigation-fe
+    container_name: irrigation-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+    command: ["npm", "run", "dev", "--", "--host"]
+
+volumes:
+  pgdata:
