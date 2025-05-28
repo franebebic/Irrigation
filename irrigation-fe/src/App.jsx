@@ -7,6 +7,8 @@ import SensorsPage from "./pages/SensorsPage";
 import ValvesPage from "./pages/ValvesPage";
 import MeasurementsPage from "./pages/MeasurementsPage";
 import ActivitiesPage from "./pages/ActivitiesPage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 function App() {
