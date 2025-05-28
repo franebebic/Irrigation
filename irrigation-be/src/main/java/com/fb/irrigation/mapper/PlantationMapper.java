@@ -21,7 +21,9 @@ public class PlantationMapper {
     public PlantationDTO toDTO(Plantation plantation) {
         return PlantationDTO.builder()
                 .id(plantation.getId())
+                .cropName(plantation.getCrop().getName())
                 .cropId(plantation.getCrop().getId())
+                .plotName(plantation.getPlot().getName())
                 .plotId(plantation.getPlot().getId())
                 .plantingDate(plantation.getPlantingDate())
                 .plantCount(plantation.getPlantCount())

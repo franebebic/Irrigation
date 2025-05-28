@@ -13,8 +13,12 @@ import java.time.LocalDate;
 public class PlantationDTO {
     private Long id;
 
+    private String plotName;
+
     @NotNull(message = "plotId is mandatory")
     private Long plotId;
+
+    private String cropName;
 
     @NotNull(message = "cropId is mandatory")
     private Long cropId;

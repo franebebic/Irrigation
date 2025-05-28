@@ -1,8 +1,6 @@
 package com.fb.irrigation.model;
 
-import com.fb.irrigation.validation.ValidMoistureRange;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +10,6 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-@ValidMoistureRange
 @Entity
 @Data
 @NoArgsConstructor
@@ -28,14 +25,12 @@ public class Crop {
     private String name;
 
     @NotNull(message = "Minimum moisture is mandatory")
-    @Min(value = 0, message = "Minimum moisture is 0")
     @Column(nullable = false)
-    private Long minMoisture;
+    private Integer minMoisture;
 
     @NotNull(message = "Maximum moisture is mandatory")
-    @Min(value = 0, message = "Maximum moisture is 100")
     @Column(nullable = false)
-    private Long maxMoisture;
+    private Integer maxMoisture;
 
     @OneToMany(mappedBy = "crop", fetch = FetchType.LAZY)
     private List<Plantation> plantations = new ArrayList<>();

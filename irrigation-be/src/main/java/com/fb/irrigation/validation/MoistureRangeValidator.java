@@ -1,13 +1,13 @@
 package com.fb.irrigation.validation;
 
-import com.fb.irrigation.model.Crop;
+import com.fb.irrigation.dto.CropDTO;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class MoistureRangeValidator implements ConstraintValidator<ValidMoistureRange, Crop> {
+public class MoistureRangeValidator implements ConstraintValidator<ValidMoistureRange, CropDTO> {
 
     @Override
-    public boolean isValid(Crop crop, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(CropDTO crop, ConstraintValidatorContext constraintValidatorContext) {
         if(crop==null) return true;
         if(crop.getMinMoisture()==null || crop.getMaxMoisture()==null) return true;
         return crop.getMinMoisture()<crop.getMaxMoisture();
