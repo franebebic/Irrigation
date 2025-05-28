@@ -4,6 +4,8 @@ import {
   CalendarCheck, BarChart, Map, Rss
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Footer from "@/components/Footer";
+
 
 const sections = [
   {
@@ -93,9 +95,12 @@ export default function MainLayout() {
         ))}
       </aside>
 
-      <main className="flex-1 p-6">
-        <Outlet />
-      </main>
+     <div className="flex flex-col flex-1">
+        <main className="flex-1 p-6">
+          <Outlet />
+        </main>
+        <Footer className="bg-red-200" />
+      </div>
     </div>
   );
 }
