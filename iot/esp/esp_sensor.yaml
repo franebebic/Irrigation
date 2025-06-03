@@ -1,0 +1,51 @@
+esphome:
+  name: esp-sensor
+
+esp32:
+  board: esp32dev
+
+logger:
+
+api:
+
+wifi:
+  ssid: "Bafarica"
+  password: "!bafi123"
+
+  manual_ip:
+    static_ip: 192.168.1.123
+    gateway: 192.168.1.1
+    subnet: 255.255.255.0
+
+  ap:
+    ssid: "esp_sensor_setup"
+    password: "12345678"
+
+captive_portal:
+
+http_request:
+  verify_ssl: false
+
+globals:
+  - id: moisture
+    type: float
+    restore_value: no
+    initial_value: '50.0'
+
+interval:
+  - interval: 10s
+    then:
+      - lambda: |-
+          float value = 30.0 + (rand() % 40); // 30-69
+          id(moisture) = value;
+          ESP_LOGI("sensor", "Simulated moisture: %.1f%%", value);
+      - http_request.post:
+          url: http://192.168.100.11:8080/measurements/from-esp
+          request_headers:
+            Content-Type: application/json
+          json: |-
+            {
+              "sensorName": "ESP1",
+              "type": "HUMIDITY",
+              "measuredValue": ${moisture}
+            }
