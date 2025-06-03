@@ -1,26 +1,14 @@
 package com.fb.irrigation.service;
 
-import com.fb.irrigation.model.Measurement;
-import com.fb.irrigation.model.Plot;
-import com.fb.irrigation.model.Sensor;
-import com.fb.irrigation.repository.MeasurementRepository;
+import com.fb.irrigation.dto.MeasurementCreateRequest;
+import com.fb.irrigation.dto.MeasurementDTO;
+import jakarta.validation.Valid;
 
-public class MeasurementService {
-    private final MeasurementRepository measurementRepository;
+import java.util.List;
+import java.util.Optional;
 
-    public MeasurementService(MeasurementRepository measurementRepository) {
-        this.measurementRepository = measurementRepository;
-    }
-
-    public Measurement save(Measurement inputMeasurement) {
-
-        Plot plot=inputMeasurement.getPlot();
-        Sensor sensor=inputMeasurement.getSensor();
-        inputMeasurement.setPlotIdSnapshot(plot.getId());
-        inputMeasurement.setPlotNameSnapshot(plot.getName());
-        inputMeasurement.setSensorIdSnapshot(sensor.getId());
-        inputMeasurement.setSensorNameSnapshot(sensor.getName());
-
-        return measurementRepository.save(inputMeasurement);
-    }
+public interface MeasurementService {
+    MeasurementDTO save(@Valid MeasurementCreateRequest dto);
+    MeasurementDTO save(@Valid MeasurementDTO dto);
+    List<MeasurementDTO> findAll();
 }

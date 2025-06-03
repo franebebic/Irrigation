@@ -34,7 +34,7 @@ class MeasurementServiceTest {
 
     // === Inject mocks into service ===
     @InjectMocks
-    private MeasurementService measurementService;
+    private MeasurementServiceImpl measurementService;
 
     // === Your test method goes here ===
     @Test
