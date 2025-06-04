@@ -17,10 +17,16 @@ import java.util.List;
 public class MeasurementController {
     private final MeasurementService measurementService;
 
+//    @PostMapping("/from-esp")
+//    public ResponseEntity<MeasurementDTO> createMeasurement(@Valid @RequestBody MeasurementCreateRequest dto) {
+//        MeasurementDTO savedMeasurementDTO = measurementService.save(dto);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(savedMeasurementDTO);
+//    }
+
     @PostMapping("/from-esp")
-    public ResponseEntity<MeasurementDTO> createMeasurement(@Valid @RequestBody MeasurementCreateRequest dto) {
-        MeasurementDTO savedMeasurementDTO = measurementService.save(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedMeasurementDTO);
+    public ResponseEntity<String> receive(@RequestBody String body) {
+        System.out.println("ESP payload: " + body);
+        return ResponseEntity.ok("Received");
     }
 
     @PostMapping
