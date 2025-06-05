@@ -9,7 +9,7 @@ export default function PlantationsPage() {
   const [plantationForEdit, setPlantationForEdit] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/plantations")
+    fetch("/plantations")
       .then((res) => res.json())
       .then(setPlantations)
       .catch((err) => console.error("Error fetching plantations:", err));
@@ -36,7 +36,7 @@ export default function PlantationsPage() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this plantation?")) return;
     try {
-      await fetch(`http://localhost:8080/plantations/${id}`, {
+      await fetch(`/plantations/${id}`, {
         method: "DELETE",
       });
       setPlantations((prev) => prev.filter((p) => p.id !== id));

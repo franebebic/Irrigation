@@ -6,7 +6,6 @@ import {
 import { cn } from "@/lib/utils";
 import Footer from "@/components/Footer";
 
-
 const sections = [
   {
     label: "Configuration",
@@ -38,7 +37,6 @@ const sections = [
   },
 ];
 
-
 export default function MainLayout() {
   const location = useLocation();
 
@@ -46,61 +44,62 @@ export default function MainLayout() {
     items.some((item) => location.pathname.startsWith(item.to));
 
   return (
-    <div className="flex min-h-screen bg-muted/40">
-      <aside className="w-64 border-r bg-white p-4 shadow-sm">
-        <div className="text-2xl font-bold mb-6">🌿 Irrigation</div>
+    <div className="flex flex-col min-h-screen bg-muted/40">
+      <div className="flex flex-1">
+        <aside className="w-64 border-r bg-white p-4 shadow-sm">
+          <div className="text-2xl font-bold mb-6">🌿 Irrigation</div>
 
-        {sections.map(({ label, items }) => (
-          <div key={label} className="mb-4">
-            <div
-              className={cn(
-                "px-3 text-xs font-semibold uppercase tracking-wider mb-2 transition-colors",
-                isSectionActive(items) ? "text-primary" : "text-muted-foreground"
-              )}
-            >
-              {label}
+          {sections.map(({ label, items }) => (
+            <div key={label} className="mb-4">
+              <div
+                className={cn(
+                  "px-3 text-xs font-semibold uppercase tracking-wider mb-2 transition-colors",
+                  isSectionActive(items) ? "text-primary" : "text-muted-foreground"
+                )}
+              >
+                {label}
+              </div>
+
+              <nav className="space-y-1">
+                {items.map(({ to, label, icon: Icon, external }) =>
+                  external ? (
+                    <a
+                      key={to}
+                      href={to}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
+                    >
+                      <Icon className="h-5 w-5" />
+                      {label}
+                    </a>
+                  ) : (
+                    <NavLink
+                      key={to}
+                      to={to}
+                      className={({ isActive }) =>
+                        cn(
+                          "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted",
+                          isActive ? "bg-muted text-primary font-semibold" : "text-muted-foreground"
+                        )
+                      }
+                    >
+                      <Icon className="h-5 w-5" />
+                      {label}
+                    </NavLink>
+                  )
+                )}
+              </nav>
             </div>
+          ))}
+        </aside>
 
-            <nav className="space-y-1">
-              {items.map(({ to, label, icon: Icon, external }) =>
-                external ? (
-                  <a
-                    key={to}
-                    href={to}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
-                  >
-                    <Icon className="h-5 w-5" />
-                    {label}
-                  </a>
-                ) : (
-                  <NavLink
-                    key={to}
-                    to={to}
-                    className={({ isActive }) =>
-                      cn(
-                        "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted",
-                        isActive ? "bg-muted text-primary font-semibold" : "text-muted-foreground"
-                      )
-                    }
-                  >
-                    <Icon className="h-5 w-5" />
-                    {label}
-                  </NavLink>
-                )
-              )}
-            </nav>
-          </div>
-        ))}
-      </aside>
-
-     <div className="flex flex-col flex-1">
         <main className="flex-1 p-6">
           <Outlet />
         </main>
-        <Footer className="bg-red-200" />
       </div>
+
+      <Footer />
     </div>
   );
 }

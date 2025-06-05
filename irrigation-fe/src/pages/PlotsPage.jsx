@@ -40,7 +40,7 @@ export default function PlotsPage() {
     if (!confirmed) return;
 
     try {
-      await fetch(`http://localhost:8080/plots/${id}`, {
+      await fetch(`/plots/${id}`, {
         method: "DELETE",
       });
       setPlots((prev) => prev.filter((c) => c.id !== id));

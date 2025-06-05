@@ -40,7 +40,7 @@ export default function CropsPage() {
     if (!confirmed) return;
 
     try {
-      await fetch(`http://localhost:8080/crops/${id}`, {
+      await fetch(`/crops/${id}`, {
         method: "DELETE",
       });
       setCrops((prev) => prev.filter((c) => c.id !== id));

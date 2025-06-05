@@ -1,5 +1,5 @@
 export default function MeasurementTable({ measurements }) {
-  if (!measurements.length) {
+  if (!Array.isArray(measurements) || measurements.length === 0) {
     return <div className="text-gray-500">No measurements found.</div>;
   }
 
@@ -19,8 +19,8 @@ export default function MeasurementTable({ measurements }) {
           <tr key={m.id}>
             <td className="p-2 border-b">{new Date(m.measuredAt).toLocaleString()}</td>
             <td className="p-2 border-b">{m.type}</td>
-            <td className="p-2 border-b">{m.sensorNameSnapshot}</td>
-            <td className="p-2 border-b">{m.plotNameSnapshot}</td>
+            <td className="p-2 border-b">{m.sensorName}</td>
+            <td className="p-2 border-b">{m.plotName}</td>
             <td className="p-2 border-b">{m.measuredValue}</td>
           </tr>
         ))}
