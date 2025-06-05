@@ -46,6 +46,6 @@ interval:
           body: !lambda |-
             char buffer[100];
             snprintf(buffer, sizeof(buffer),
-                     "{\"sensorName\":\"ESP1\",\"type\":\"HUMIDITY\",\"measuredValue\":%.1f}",
+                     "{\"sensorName\":\"ESP2\",\"type\":\"HUMIDITY\",\"measuredValue\":%.1f}",
                      id(moisture));
             return std::string(buffer);

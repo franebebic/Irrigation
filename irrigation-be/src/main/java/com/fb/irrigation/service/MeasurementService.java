@@ -3,12 +3,16 @@ package com.fb.irrigation.service;
 import com.fb.irrigation.dto.MeasurementCreateRequest;
 import com.fb.irrigation.dto.MeasurementDTO;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface MeasurementService {
     MeasurementDTO save(@Valid MeasurementCreateRequest dto);
     MeasurementDTO save(@Valid MeasurementDTO dto);
     List<MeasurementDTO> findAll();
+
+    Page<MeasurementDTO> findAll(int page, int size, String sensorName, String plotName);
+    List<String> getSensorFilterOptions();
+    List<String> getPlotFilterOptions();
 }

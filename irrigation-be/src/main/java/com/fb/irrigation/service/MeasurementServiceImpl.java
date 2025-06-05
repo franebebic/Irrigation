@@ -9,13 +9,18 @@ import com.fb.irrigation.model.Sensor;
 import com.fb.irrigation.repository.MeasurementRepository;
 import com.fb.irrigation.repository.PlotRepository;
 import com.fb.irrigation.repository.SensorRepository;
+import com.fb.irrigation.specification.MeasurementSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -65,5 +70,25 @@ public class MeasurementServiceImpl implements MeasurementService {
     @Override
     public List<MeasurementDTO> findAll() {
         return measurementRepository.findAll().stream().map(measurementMapper::toDTO).toList();
+    }
+
+    @Override
+    public Page<MeasurementDTO> findAll(int page, int size, String sensorName, String plotName) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "measuredAt"));
+        Specification<Measurement> spec = Specification
+                .where(MeasurementSpecification.sensorNameLike(sensorName))
+                .and(MeasurementSpecification.plotNameLike(plotName));
+
+        return measurementRepository.findAll(spec, pageable).map(measurementMapper::toDTO);
+    }
+
+    @Override
+    public List<String> getSensorFilterOptions() {
+        return measurementRepository.findDistinctSensorNames();
+    }
+
+    @Override
+    public List<String> getPlotFilterOptions() {
+        return measurementRepository.findDistinctPlotNames();
     }
 }
