@@ -27,12 +27,12 @@ public class ValveServiceImpl implements ValveService {
         if (dto.getPlotId() != null)
             plot = plotRepository.findById(dto.getPlotId()).orElseThrow(() -> new EntityNotFoundException("Plot with id " + dto.getPlotId() + " not found"));
 
-        if(dto.getStatus()==null)
+        if (dto.getStatus() == null)
             dto.setStatus(ValveStatus.CLOSED);
 
         Optional<Valve> existing = valveRepository.findByPlotId(dto.getPlotId());
         if (existing.isPresent() && !existing.get().getId().equals(dto.getId())) {
-            throw new IllegalStateException("Plot '"+existing.get().getPlot().getName()+"' already has valve '" + existing.get().getName() + "'");
+            throw new IllegalStateException("Plot '" + existing.get().getPlot().getName() + "' already has valve '" + existing.get().getName() + "'");
         }
 
         Valve valve = valveMapper.toEntity(dto, plot);
@@ -54,6 +54,14 @@ public class ValveServiceImpl implements ValveService {
     public void deleteById(Long id) {
         if (!valveRepository.existsById(id))
             throw new EntityNotFoundException("Valve with id " + id + " not found");
+
+        Valve valve = valveRepository.getReferenceById(id);
+        Plot plot = valve.getPlot();
+        if (plot != null) {
+            plot.setValve(null);
+            plotRepository.save(plot);
+        }
+
         valveRepository.deleteById(id);
     }
 
@@ -67,10 +75,10 @@ public class ValveServiceImpl implements ValveService {
 
     @Override
     public ValveDTO toggle(Long id) {
-        Valve valve= valveRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Valve with id "+id+" not found"));
+        Valve valve = valveRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Valve with id " + id + " not found"));
 
         valve.setStatus(valve.getStatus().toggle());
-        Valve saved= valveRepository.save(valve);
+        Valve saved = valveRepository.save(valve);
         return valveMapper.toDTO(saved);
     }
 }

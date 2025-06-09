@@ -43,7 +43,7 @@ export default function ValveTable({ valves, onEdit, onDelete, onToggle }) {
             <td className="p-2 border-b">{valve.plotName}</td>
             <td className="p-2 border-b">
               <Switch
-                checked={valve.status === "ON"}
+                checked={valve.status === "OPEN"}
                 onCheckedChange={() => handleToggle(valve)}
                 disabled={loadingIds.includes(valve.id)}
               />
