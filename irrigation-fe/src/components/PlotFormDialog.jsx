@@ -26,8 +26,8 @@ export default function PlotFormDialog({ open, onOpenChange, onAddPlot, initialD
 
     const method = initialData ? "PUT" : "POST";
     const url = initialData
-      ? `http://localhost:8080/plots/${initialData.id}`
-      : "http://localhost:8080/plots";
+      ? `http://localhost:8080/api/plots/${initialData.id}`
+      : "http://localhost:8080/api/plots";
 
     const response = await fetch(url, {
       method,

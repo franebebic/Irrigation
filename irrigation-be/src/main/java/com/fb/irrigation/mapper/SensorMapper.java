@@ -16,11 +16,12 @@ public class SensorMapper {
     }
 
     public SensorDTO toDTO(Sensor sensor) {
+        Plot plot = sensor.getPlot();
         return SensorDTO.builder()
                 .id(sensor.getId())
                 .name(sensor.getName())
-                .plotId(sensor.getPlot()!=null? sensor.getPlot().getId():null)
-                .plotName(sensor.getPlot()!=null? sensor.getPlot().getName():null)
+                .plotId(plot !=null? plot.getId():null)
+                .plotName(plot !=null? plot.getName():null)
                 .build();
     }
 }

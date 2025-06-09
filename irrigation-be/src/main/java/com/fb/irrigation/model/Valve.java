@@ -28,6 +28,10 @@ public class Valve {
     @JoinColumn(name="plot_id")
     private Plot plot;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ValveStatus status;
+
     @OneToMany(mappedBy = "valve", fetch = FetchType.LAZY)
     private List<Activity> activities= new ArrayList<>();
 }

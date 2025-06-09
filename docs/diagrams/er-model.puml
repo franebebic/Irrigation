@@ -36,6 +36,7 @@ entity "Valve" {
   --
   plot_id : Long
   name : String
+  status: ENUM [OPEN, CLOSED]
 }
 
 entity "Measurement" {

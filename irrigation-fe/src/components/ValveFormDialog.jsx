@@ -4,67 +4,77 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function SensorFormDialog({ open, onOpenChange, onAddSensor, initialData }) {
+export default function ValveFormDialog({ open, onOpenChange, onAddValve, initialData }) {
+  const [name, setName] = useState("");
   const [plotId, setPlotId] = useState("");
   const [plots, setPlots] = useState([]);
-  const [name, setName] = useState("");
 
-  // 1. Dohvati plots kad se dijalog otvori
+  // 1. Učitaj plots
   useEffect(() => {
     if (open) {
-      fetch("http://localhost:8080/api/plots")
-        .then(res => res.json())
-        .then(setPlots);
+      axios.get("/api/plots")
+        .then(res => setPlots(res.data))
+        .catch(err => console.error("Failed to load plots", err));
     }
   }, [open]);
 
-  // 2. Postavi form podatke tek kad su plots dostupni
+  // 2. Postavi formu kad su podaci dostupni
   useEffect(() => {
     if (initialData && plots.length > 0) {
-      setPlotId(initialData.plotId?.toString() || "");
       setName(initialData.name || "");
+      setPlotId(initialData.plotId?.toString() || "");
     } else if (!initialData && plots.length > 0) {
-      setPlotId("");
       setName("");
+      setPlotId("");
     }
   }, [initialData, plots]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const sensor = {
-      name: name.trim(),
-      plotId: plotId ? parseInt(plotId) : null,
-    };
-
-    const method = initialData ? "PUT" : "POST";
-    const url = initialData
-      ? `http://localhost:8080/api/sensors/${initialData.id}`
-      : "http://localhost:8080/api/sensors";
-
-    const response = await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(sensor),
-    });
-
-    if (response.ok) {
-      const updated = await response.json();
-      onAddSensor(updated);
-      onOpenChange(false);
-    } else {
-      alert("Failed to save sensor.");
+  // 3. Resetiraj formu kad se zatvori dijalog
+  useEffect(() => {
+    if (!open) {
+      setName("");
+      setPlotId("");
     }
+  }, [open]);
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const valve = {
+    name: name.trim(),
+    plotId: plotId ? parseInt(plotId) : null,
   };
+
+  const method = initialData ? "put" : "post";
+  const url = initialData ? `/api/valves/${initialData.id}` : "/api/valves";
+
+  try {
+    const res = await axios[method](url, valve);
+    onAddValve(res.data);
+    onOpenChange(false);
+  } catch (err) {
+    const errorMessage =
+      typeof err?.response?.data === "string"
+        ? err.response.data
+        : err?.response?.data?.error || "Failed to save valve.";
+
+    alert(errorMessage);
+  }
+};
+
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>{initialData ? "Edit Sensor" : "Add New Sensor"}</DialogTitle>
+          <DialogTitle>{initialData ? "Edit Valve" : "Add New Valve"}</DialogTitle>
           <DialogDescription>
-            {initialData ? "Update the sensor's details below." : "Fill in the form to add a new sensor."}
+            {initialData
+              ? "Update the valve's details below."
+              : "Fill in the form to add a new valve."}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
@@ -74,7 +84,7 @@ export default function SensorFormDialog({ open, onOpenChange, onAddSensor, init
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              placeholder="Enter sensor name"
+              placeholder="Enter valve name"
             />
           </div>
           <div>
@@ -93,7 +103,7 @@ export default function SensorFormDialog({ open, onOpenChange, onAddSensor, init
             </Select>
           </div>
           <Button type="submit" className="w-full">
-            {initialData ? "Save Changes" : "Add Sensor"}
+            {initialData ? "Save Changes" : "Add Valve"}
           </Button>
         </form>
       </DialogContent>

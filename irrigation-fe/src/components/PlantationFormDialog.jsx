@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -16,20 +16,38 @@ export default function PlantationFormDialog({ open, onOpenChange, onAddPlantati
   const [plots, setPlots] = useState([]);
 
   useEffect(() => {
-    if (initialData) {
-      setCropId(initialData.cropId?.toString() || "");
-      setPlotId(initialData.plotId?.toString() || "");
-      setPlantingDate(new Date(initialData.plantingDate));
-      setPlantCount(initialData.plantCount?.toString() || "");
-    } else {
-      setCropId(""); setPlotId(""); setPlantingDate(null); setPlantCount("");
-    }
-
     if (open) {
-      fetch("http://localhost:8080/crops").then(res => res.json()).then(setCrops);
-      fetch("http://localhost:8080/plots").then(res => res.json()).then(setPlots);
+      fetch("http://localhost:8080/api/crops").then(res => res.json()).then(setCrops);
+      fetch("http://localhost:8080/api/plots").then(res => res.json()).then(setPlots);
     }
-  }, [initialData, open]);
+  }, [open]);
+
+useEffect(() => {
+  const cropsReady = crops.length > 0;
+  const plotsReady = plots.length > 0;
+
+  if (initialData && cropsReady && plotsReady) {
+    setCropId(initialData.cropId?.toString() || "");
+    setPlotId(initialData.plotId?.toString() || "");
+    setPlantingDate(new Date(initialData.plantingDate));
+    setPlantCount(initialData.plantCount?.toString() || "");
+  } else if (!initialData && cropsReady && plotsReady) {
+    setCropId("");
+    setPlotId("");
+    setPlantingDate(null);
+    setPlantCount("");
+  }
+}, [initialData, crops, plots]);
+
+useEffect(() => {
+  if (!open) {
+    setCropId("");
+    setPlotId("");
+    setPlantingDate(null);
+    setPlantCount("");
+  }
+}, [open]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,8 +61,8 @@ export default function PlantationFormDialog({ open, onOpenChange, onAddPlantati
 
     const method = initialData ? "PUT" : "POST";
     const url = initialData
-      ? `http://localhost:8080/plantations/${initialData.id}`
-      : "http://localhost:8080/plantations";
+      ? `http://localhost:8080/api/plantations/${initialData.id}`
+      : "http://localhost:8080/api/plantations";
 
     const response = await fetch(url, {
       method,
@@ -64,9 +82,14 @@ export default function PlantationFormDialog({ open, onOpenChange, onAddPlantati
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>{initialData ? "Edit Plantation" : "Add New Plantation"}</DialogTitle>
-        </DialogHeader>
+     <DialogHeader>
+       <DialogTitle>{initialData ? "Edit Plantation" : "Add New Plantation"}</DialogTitle>
+       <DialogDescription>
+         {initialData
+           ? "Update the plantation's details below."
+           : "Fill in the form to add a new plantation."}
+       </DialogDescription>
+     </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <div>
             <Label>Crop</Label>
