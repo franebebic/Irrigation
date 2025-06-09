@@ -4,8 +4,10 @@ export default function DashboardPage() {
     "?orgId=1&from=now-6h&to=now&theme=light&kiosk=tv";
 
   return (
-<div className="w-screen h-[90vh]">
-  <iframe
+<div
+  className="h-[90vh]"
+  style={{ width: "calc(100vw - 300px)" }}>
+    <iframe
     src={grafanaURL}
     title="Grafana"
     width="100%"
