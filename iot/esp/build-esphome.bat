@@ -5,7 +5,7 @@ REM ----- Lokacije -----
 set SOURCE_YAML=C:\Projects\irrigation-project\iot\esp\esp_sensor.yaml
 set WORK_DIR=C:\esp-build
 set VENV_PATH=C:\Projects\irrigation-project\iot\esp\esphome-env
-set SERIAL_PORT=COM8
+set SERIAL_PORT=COM7
 
 REM ----- Forsiraj PlatformIO build direktorije BEZ dijakritika -----
 set PLATFORMIO_CORE_DIR=C:\esp-platformio
