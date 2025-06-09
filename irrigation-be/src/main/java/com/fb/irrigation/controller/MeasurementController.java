@@ -5,6 +5,7 @@ import com.fb.irrigation.dto.MeasurementDTO;
 import com.fb.irrigation.service.MeasurementService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/measurements")
 @RequiredArgsConstructor
@@ -20,6 +22,7 @@ public class MeasurementController {
 
     @PostMapping("/from-esp")
     public ResponseEntity<MeasurementDTO> createMeasurement(@Valid @RequestBody MeasurementCreateRequest dto) {
+        log.info("Received measurement from ESP: {}", dto); // ili samo dto.getSensorName(), getMeasuredValue()...
 
         MeasurementDTO savedMeasurementDTO = measurementService.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMeasurementDTO);

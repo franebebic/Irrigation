@@ -1,0 +1,54 @@
+@startuml
+!pragma layout smetana
+
+skinparam linetype ortho
+skinparam defaultTextAlignment center
+
+' UI
+package "UI" {
+  [Frontend (React)] as FE
+  [Grafana]
+}
+
+' Backend
+package "Backend" {
+  [Backend API (Spring Boot)] as BE
+  [PostgreSQL DB] as DB
+  [Kafka Broker] as Kafka
+  [MQTT Broker (Mosquitto)] as MQTT
+  [IrrigationDecisionService] as IDS
+}
+
+' External services
+package "External services" {
+  [OpenWeatherMap API] as Weather
+}
+
+' IoT devices
+package "IoT devices" {
+  [ESP Sensor] as Sensor
+  [ESP Valve] as Valve
+}
+
+' Connections
+FE --> BE : REST
+FE --> Grafana : iframe embed
+BE --> DB : SQL (JPA/Hibernate)
+DB --> Grafana : SELECT
+
+Sensor --> MQTT : publish moisture
+MQTT --> BE : subscribe
+BE --> MQTT : publish command
+MQTT --> Valve : command
+Valve --> MQTT : status
+MQTT --> BE : status feedback
+
+BE --> Kafka : measurement event
+Kafka --> IDS : consume
+IDS --> Kafka : command event
+Kafka --> BE : consume
+
+IDS --> Weather : REST API
+IDS --> BE : REST (aggregated data)
+
+@enduml
