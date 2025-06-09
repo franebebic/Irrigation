@@ -28,7 +28,7 @@ const sections = [
     label: "Analytics",
     items: [
       {
-        to: "http://localhost:3000/d/grafana",
+        to: "/dashboard",
         label: "Dashboard",
         icon: BarChart,
         external: true,
@@ -66,7 +66,6 @@ export default function MainLayout() {
                     <a
                       key={to}
                       href={to}
-                      target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
                     >
@@ -94,9 +93,9 @@ export default function MainLayout() {
           ))}
         </aside>
 
-        <main className="flex-1 p-6">
-          <Outlet />
-        </main>
+<main className={cn("flex-1", location.pathname === "/dashboard" ? "p-0" : "p-6")}>
+  <Outlet />
+</main>
       </div>
 
       <Footer />

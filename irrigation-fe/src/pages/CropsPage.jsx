@@ -40,7 +40,7 @@ export default function CropsPage() {
     if (!confirmed) return;
 
     try {
-      await fetch(`/crops/${id}`, {
+      await fetch(`/api/crops/${id}`, {
         method: "DELETE",
       });
       setCrops((prev) => prev.filter((c) => c.id !== id));

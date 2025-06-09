@@ -9,7 +9,7 @@ export default function SensorsPage() {
   const [sensorForEdit, setSensorForEdit] = useState(null);
 
   useEffect(() => {
-    fetch("/sensors")
+    fetch("/api/sensors")
       .then((res) => res.json())
       .then(setSensors)
       .catch((err) => console.error("Error fetching sensors:", err));
@@ -36,7 +36,7 @@ export default function SensorsPage() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this sensor?")) return;
     try {
-      await fetch(`/sensors/${id}`, {
+      await fetch(`/api/sensors/${id}`, {
         method: "DELETE",
       });
       setSensors((prev) => prev.filter((p) => p.id !== id));

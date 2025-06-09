@@ -10,12 +10,8 @@ export default defineConfig({
     },
   },
   server: {
-    proxy: {
-            '/measurements': 'http://localhost:8080',
-            '/sensors': 'http://localhost:8080',
-            '/plots': 'http://localhost:8080',
-            '/crops': 'http://localhost:8080',
-            '/plantations': 'http://localhost:8080',
-      },
+  proxy: {
+    '/api': 'http://localhost:8080'
+  }
   },
 });

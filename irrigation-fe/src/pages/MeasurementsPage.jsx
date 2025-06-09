@@ -19,7 +19,7 @@ export default function MeasurementsPage() {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get("/measurements", {
+        .get("/api/measurements", {
           params: {
             page,
             size,
@@ -38,8 +38,8 @@ export default function MeasurementsPage() {
 
   // Dohvati opcije za filtere (samo jednom)
   useEffect(() => {
-    axios.get("/measurements/sensor-options").then((res) => setSensorOptions(res.data));
-    axios.get("/measurements/plot-options").then((res) => setPlotOptions(res.data));
+    axios.get("/api/measurements/sensor-options").then((res) => setSensorOptions(res.data));
+    axios.get("/api/measurements/plot-options").then((res) => setPlotOptions(res.data));
   }, []);
 
   if (!measurementsPage) return <div>Loading...</div>;
