@@ -58,6 +58,18 @@ services:
     depends_on:
       - postgres
 
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    ports:
+      - "1883:1883"     # MQTT
+      - "9001:9001"     # optional: WebSocket
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    restart: unless-stopped
+
 volumes:
   pgdata:
   grafana-storage:
