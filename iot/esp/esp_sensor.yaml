@@ -4,6 +4,10 @@ esphome:
 esp32:
   board: esp32dev
 
+ota:
+  platform: esphome
+  password: "!32ESP_OTA_Password"
+
 logger:
 
 api:
@@ -13,7 +17,7 @@ wifi:
   password: "!bafi123"
 
   manual_ip:
-    static_ip: 192.168.100.123
+    static_ip: 192.168.100.122
     gateway: 192.168.100.1
     subnet: 255.255.255.0
 
@@ -23,8 +27,12 @@ wifi:
 
 captive_portal:
 
-http_request:
-  verify_ssl: false
+mqtt:
+  broker: 192.168.100.10  # IP adresa MQTT brokera (tvoj backend)
+  port: 1883
+  username: ""           # Ako koristiš autentifikaciju, upiši korisničko ime
+  password: ""           # Ako koristiš autentifikaciju, upiši lozinku
+  topic_prefix: "sensors/esp-sensor"  # Prefiks topic-a, možeš prilagoditi
 
 globals:
   - id: moisture
@@ -39,13 +47,12 @@ interval:
           float value = 30.0 + (rand() % 40);  // Simulira vlagu 30–69%
           id(moisture) = value;
           ESP_LOGI("sensor", "Simulated moisture: %.1f%%", value);
-      - http_request.post:
-          url: http://192.168.100.11:8080/api/measurements/from-esp
-          request_headers:
-            Content-Type: application/json
-          body: !lambda |-
+      - mqtt.publish:
+          topic: sensors/esp-sensor/data
+          payload: !lambda |-
             char buffer[100];
             snprintf(buffer, sizeof(buffer),
-                     "{\"sensorName\":\"ESP1\",\"type\":\"HUMIDITY\",\"measuredValue\":%.1f}",
+                     "{\"sensorName\":\"ESP2\",\"type\":\"HUMIDITY\",\"measuredValue\":%.1f}",
                      id(moisture));
-            return std::string(buffer);
+            return std::string(buffer).c_str();
+     

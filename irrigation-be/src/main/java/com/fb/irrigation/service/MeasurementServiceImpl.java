@@ -32,6 +32,16 @@ public class MeasurementServiceImpl implements MeasurementService {
 
     @Override
     public MeasurementDTO save(MeasurementCreateRequest createRequest) {
+        Measurement savedMeasurement = createMeasurementFromCreateRequest(createRequest);
+        return measurementMapper.toDTO(savedMeasurement);
+    }
+
+    @Override
+    public void createFromMqtt(MeasurementCreateRequest dto) {
+        createMeasurementFromCreateRequest(dto);
+    }
+
+    private Measurement createMeasurementFromCreateRequest(MeasurementCreateRequest createRequest) {
         Sensor sensor = sensorRepository.findByName(createRequest.getSensorName()).orElseThrow(() ->
                 new EntityNotFoundException("Sensor with name " + createRequest.getSensorName() + " not found"));
 
@@ -53,8 +63,7 @@ public class MeasurementServiceImpl implements MeasurementService {
                 .type(createRequest.getType())
                 .build();
 
-        Measurement savedMeasurement = measurementRepository.save(measurement);
-        return measurementMapper.toDTO(savedMeasurement);
+        return measurementRepository.save(measurement);
     }
 
     public MeasurementDTO save(MeasurementDTO dto) {

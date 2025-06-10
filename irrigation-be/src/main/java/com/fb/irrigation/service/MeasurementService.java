@@ -8,7 +8,9 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface MeasurementService {
+    @Deprecated
     MeasurementDTO save(@Valid MeasurementCreateRequest dto);
+    void createFromMqtt(@Valid MeasurementCreateRequest dto);
     MeasurementDTO save(@Valid MeasurementDTO dto);
     List<MeasurementDTO> findAll();
 

@@ -1,0 +1,179 @@
+1749549964: mosquitto version 2.0.21 starting
+1749549964: Config loaded from /mosquitto/config/mosquitto.conf.
+1749549964: Opening ipv4 listen socket on port 1883.
+1749549964: Opening ipv6 listen socket on port 1883.
+1749549964: mosquitto version 2.0.21 running
+1749549984: mosquitto version 2.0.21 terminating
+1749549984: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1749549984: mosquitto version 2.0.21 starting
+1749549984: Config loaded from /mosquitto/config/mosquitto.conf.
+1749549984: Opening ipv4 listen socket on port 1883.
+1749549984: Opening ipv6 listen socket on port 1883.
+1749549984: mosquitto version 2.0.21 running
+1749550276: New connection from 172.18.0.1:43626 on port 1883.
+1749550276: New client connected from 172.18.0.1:43626 as mqtt-explorer-42080a91 (p2, c1, k60).
+1749550380: New connection from 172.18.0.1:58560 on port 1883.
+1749550380: New client connected from 172.18.0.1:58560 as spring-backend (p2, c1, k60).
+1749550517: Client spring-backend closed its connection.
+1749550527: New connection from 172.18.0.1:52268 on port 1883.
+1749550527: New client connected from 172.18.0.1:52268 as spring-backend (p2, c1, k60).
+1749550577: Client spring-backend closed its connection.
+1749550588: New connection from 172.18.0.1:39282 on port 1883.
+1749550588: New client connected from 172.18.0.1:39282 as spring-backend (p2, c1, k60).
+1749550893: Client spring-backend closed its connection.
+1749550904: New connection from 172.18.0.1:39326 on port 1883.
+1749550905: New client connected from 172.18.0.1:39326 as spring-backend (p2, c1, k60).
+1749551785: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1749552419: Client mqtt-explorer-42080a91 disconnected.
+1749552427: New connection from 172.18.0.1:45846 on port 1883.
+1749552427: New client connected from 172.18.0.1:45846 as mqtt-explorer-42080a91 (p2, c1, k60).
+1749552431: Client mqtt-explorer-42080a91 disconnected.
+1749552468: New connection from 172.18.0.1:38254 on port 1883.
+1749552468: New client connected from 172.18.0.1:38254 as mqtt-explorer-42080a91 (p2, c1, k60).
+1749552524: New connection from 172.18.0.1:45388 on port 1883.
+1749552524: New client connected from 172.18.0.1:45388 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749552570: Client esp-sensor-246f28b1dd2c closed its connection.
+1749552638: New connection from 172.18.0.1:52302 on port 1883.
+1749552638: New client connected from 172.18.0.1:52302 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749552638: Client esp-sensor-246f28b1dd2c closed its connection.
+1749552803: New connection from 172.18.0.1:59700 on port 1883.
+1749552803: New client connected from 172.18.0.1:59700 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749552819: Client esp-sensor-246f28b1dd2c closed its connection.
+1749552877: New connection from 172.18.0.1:55682 on port 1883.
+1749552877: New client connected from 172.18.0.1:55682 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749552878: Client esp-sensor-246f28b1dd2c closed its connection.
+1749553000: New connection from 172.18.0.1:33724 on port 1883.
+1749553000: New client connected from 172.18.0.1:33724 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749553004: Client esp-sensor-246f28b1dd2c closed its connection.
+1749557216: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1749557216: Client spring-backend has exceeded timeout, disconnecting.
+1749557216: Client mqtt-explorer-42080a91 has exceeded timeout, disconnecting.
+1749557219: New connection from 172.18.0.1:41216 on port 1883.
+1749557219: New client connected from 172.18.0.1:41216 as mqtt-explorer-42080a91 (p2, c1, k60).
+1749557253: New connection from 172.18.0.1:57822 on port 1883.
+1749557253: New client connected from 172.18.0.1:57822 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749557253: Client esp-sensor-246f28b1dd2c closed its connection.
+1749557254: New connection from 172.18.0.1:57828 on port 1883.
+1749557254: New client connected from 172.18.0.1:57828 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749557405: Client esp-sensor-246f28b1dd2c has exceeded timeout, disconnecting.
+1749557405: Client mqtt-explorer-42080a91 has exceeded timeout, disconnecting.
+1749557407: New connection from 172.18.0.1:57844 on port 1883.
+1749557407: New client connected from 172.18.0.1:57844 as mqtt-explorer-42080a91 (p2, c1, k60).
+1749557421: New connection from 172.18.0.1:45412 on port 1883.
+1749557421: New client connected from 172.18.0.1:45412 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749557438: Client esp-sensor-246f28b1dd2c closed its connection.
+1749557488: New connection from 172.18.0.1:46106 on port 1883.
+1749557488: New client connected from 172.18.0.1:46106 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749557498: Client esp-sensor-246f28b1dd2c closed its connection.
+1749557548: New connection from 172.18.0.1:54286 on port 1883.
+1749557548: New client connected from 172.18.0.1:54286 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749557558: Client esp-sensor-246f28b1dd2c closed its connection.
+1749557608: New connection from 172.18.0.1:36658 on port 1883.
+1749557608: New client connected from 172.18.0.1:36658 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749557618: Client esp-sensor-246f28b1dd2c closed its connection.
+1749557643: New connection from 172.18.0.1:58352 on port 1883.
+1749557643: New client connected from 172.18.0.1:58352 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749557678: Client esp-sensor-246f28b1dd2c closed its connection.
+1749557728: New connection from 172.18.0.1:47116 on port 1883.
+1749557728: New client connected from 172.18.0.1:47116 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749557738: Client esp-sensor-246f28b1dd2c closed its connection.
+1749557788: New connection from 172.18.0.1:46266 on port 1883.
+1749557788: New client connected from 172.18.0.1:46266 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749557799: Client esp-sensor-246f28b1dd2c closed its connection.
+1749557849: New connection from 172.18.0.1:40910 on port 1883.
+1749557849: New client connected from 172.18.0.1:40910 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749557858: Client esp-sensor-246f28b1dd2c closed its connection.
+1749557908: New connection from 172.18.0.1:42146 on port 1883.
+1749557908: New client connected from 172.18.0.1:42146 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749557978: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558028: New connection from 172.18.0.1:43974 on port 1883.
+1749558028: New client connected from 172.18.0.1:43974 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558038: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558088: New connection from 172.18.0.1:37864 on port 1883.
+1749558088: New client connected from 172.18.0.1:37864 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558109: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558162: New connection from 172.18.0.1:42922 on port 1883.
+1749558162: New client connected from 172.18.0.1:42922 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558226: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558276: New connection from 172.18.0.1:46452 on port 1883.
+1749558276: New client connected from 172.18.0.1:46452 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558286: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558336: New connection from 172.18.0.1:55356 on port 1883.
+1749558336: New client connected from 172.18.0.1:55356 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558347: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558397: New connection from 172.18.0.1:34608 on port 1883.
+1749558397: New client connected from 172.18.0.1:34608 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558406: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558434: New connection from 172.18.0.1:44788 on port 1883.
+1749558434: New client connected from 172.18.0.1:44788 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558466: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558515: New connection from 172.18.0.1:38510 on port 1883.
+1749558516: New client connected from 172.18.0.1:38510 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558527: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558576: New connection from 172.18.0.1:57522 on port 1883.
+1749558576: New client connected from 172.18.0.1:57522 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558586: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558636: New connection from 172.18.0.1:50948 on port 1883.
+1749558636: New client connected from 172.18.0.1:50948 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558646: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558697: New connection from 172.18.0.1:51738 on port 1883.
+1749558697: New client connected from 172.18.0.1:51738 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558766: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558816: New connection from 172.18.0.1:35114 on port 1883.
+1749558816: New client connected from 172.18.0.1:35114 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558827: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558877: New connection from 172.18.0.1:46478 on port 1883.
+1749558877: New client connected from 172.18.0.1:46478 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558893: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558900: New connection from 172.18.0.1:37496 on port 1883.
+1749558900: New client connected from 172.18.0.1:37496 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558924: Client esp-sensor-246f28b1dd2c has exceeded timeout, disconnecting.
+1749558930: New connection from 172.18.0.1:52454 on port 1883.
+1749558930: New client connected from 172.18.0.1:52454 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749558942: Client esp-sensor-246f28b1dd2c closed its connection.
+1749558992: New connection from 172.18.0.1:38042 on port 1883.
+1749558992: New client connected from 172.18.0.1:38042 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749559012: Client esp-sensor-246f28b1dd2c closed its connection.
+1749559017: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1749559046: New connection from 172.18.0.1:51292 on port 1883.
+1749559046: New client connected from 172.18.0.1:51292 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749559072: Client esp-sensor-246f28b1dd2c closed its connection.
+1749559103: New connection from 172.18.0.1:55014 on port 1883.
+1749559103: New client connected from 172.18.0.1:55014 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749559132: Client esp-sensor-246f28b1dd2c closed its connection.
+1749559163: New connection from 172.18.0.1:54062 on port 1883.
+1749559163: New client connected from 172.18.0.1:54062 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749559192: Client esp-sensor-246f28b1dd2c closed its connection.
+1749559217: New connection from 172.18.0.1:56330 on port 1883.
+1749559217: New client connected from 172.18.0.1:56330 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749559252: Client esp-sensor-246f28b1dd2c closed its connection.
+1749559283: New connection from 172.18.0.1:43440 on port 1883.
+1749559283: New client connected from 172.18.0.1:43440 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749559312: Client esp-sensor-246f28b1dd2c closed its connection.
+1749559345: New connection from 172.18.0.1:40976 on port 1883.
+1749559345: New client connected from 172.18.0.1:40976 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749559377: Client esp-sensor-246f28b1dd2c has exceeded timeout, disconnecting.
+1749559388: New connection from 172.18.0.1:40920 on port 1883.
+1749559388: New client connected from 172.18.0.1:40920 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749559587: New connection from 172.18.0.1:35840 on port 1883.
+1749559587: Client esp-sensor-246f28b1dd2c already connected, closing old connection.
+1749559587: New client connected from 172.18.0.1:35840 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749559629: New connection from 172.18.0.1:58428 on port 1883.
+1749559629: Client esp-sensor-246f28b1dd2c already connected, closing old connection.
+1749559629: New client connected from 172.18.0.1:58428 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749559641: New connection from 172.18.0.1:33072 on port 1883.
+1749559641: Client esp-sensor-246f28b1dd2c already connected, closing old connection.
+1749559641: New client connected from 172.18.0.1:33072 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749559675: Client esp-sensor-246f28b1dd2c closed its connection.
+1749559682: New connection from 172.18.0.1:47436 on port 1883.
+1749559682: New client connected from 172.18.0.1:47436 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749560043: New connection from 172.18.0.1:53776 on port 1883.
+1749560043: Client esp-sensor-246f28b1dd2c already connected, closing old connection.
+1749560043: New client connected from 172.18.0.1:53776 as esp-sensor-246f28b1dd2c (p2, c0, k15).
+1749560121: New connection from 172.18.0.1:40404 on port 1883.
+1749560121: New client connected from 172.18.0.1:40404 as spring-backend (p2, c1, k60).
+1749560125: New connection from 172.18.0.1:40412 on port 1883.
+1749560125: New client connected from 172.18.0.1:40412 as esp-sensor-10521c692d1c (p2, c0, k15).
+1749560669: New connection from 172.18.0.1:48720 on port 1883.
+1749560669: Client esp-sensor-10521c692d1c already connected, closing old connection.
+1749560669: New client connected from 172.18.0.1:48720 as esp-sensor-10521c692d1c (p2, c0, k15).
