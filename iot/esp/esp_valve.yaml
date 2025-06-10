@@ -1,0 +1,42 @@
+esphome:
+  name: esp-valve-1
+  friendly_name: Valve 1
+
+esp32:
+  board: esp32dev
+
+logger:
+
+api:
+
+ota:
+  platform: esphome
+  password: "!32ESP_OTA_Password"
+
+wifi:
+  ssid: "Bafarica"
+  password: "!bafi123"
+  manual_ip:
+    static_ip: 192.168.100.131
+    gateway: 192.168.100.1
+    subnet: 255.255.255.0
+
+mqtt:
+  broker: 192.168.100.10
+  port: 1883
+  username: ""
+  password: ""
+  discovery: false
+  topic_prefix: valve/esp-valve-1
+
+output:
+  - platform: gpio
+    pin: GPIO2
+    id: valve_led
+
+switch:
+  - platform: output
+    name: "Valve Control"
+    id: valve_control
+    output: valve_led
+    retain: true
