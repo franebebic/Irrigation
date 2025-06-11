@@ -53,7 +53,7 @@ public class MqttSubscriber {
                 client.close();
             }
         } catch (MqttException e) {
-            log.error("Error during MQTT client shutdown", e);
+            log.error("Error during MQTT client shutdown ", e);
         }
     }
 }
