@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fb.irrigation.dto.MeasurementCreateRequest;
 import com.fb.irrigation.service.MeasurementService;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -17,11 +18,12 @@ public class MqttSubscriber {
     private final ObjectMapper objectMapper;
     private final MeasurementService measurementService;
     private final MqttProperties properties;
+    private MqttClient client;
 
     @PostConstruct
     public void subscribe() {
         try {
-            MqttClient client = new MqttClient(properties.getBroker(), properties.getClientId());
+            client = new MqttClient(properties.getBroker(), properties.getClientId());
             client.connect();
 
             client.subscribe(properties.getSensorsTopic(), (topic, message) -> {
@@ -40,6 +42,18 @@ public class MqttSubscriber {
 
         } catch (MqttException e) {
             log.error("Error while connecting to MQTT broker", e);
+        }
+    }
+
+    @PreDestroy
+    public void cleanup() {
+        try {
+            if (client != null && client.isConnected()) {
+                client.disconnect();
+                client.close();
+            }
+        } catch (MqttException e) {
+            log.error("Error during MQTT client shutdown", e);
         }
     }
 }
