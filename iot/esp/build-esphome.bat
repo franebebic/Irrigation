@@ -14,7 +14,7 @@ set PLATFORMIO_GLOBALLY_INSTALLED_PACKAGES_DIR=C:\esp-platformio\packages
 REM ----- Priprema build foldera -----
 echo [INFO] Kopiram YAML u %WORK_DIR%
 if not exist "%WORK_DIR%" mkdir "%WORK_DIR%"
-copy /Y "%SOURCE_YAML%" "%WORK_DIR%\esp_valve.yaml"
+xcopy /Y /I /Q "C:\Projects\irrigation-project\iot\esp\*" "%WORK_DIR%\"
 
 REM ----- Aktivacija virtualnog okruženja -----
 echo [INFO] Aktiviram virtualno okruženje...

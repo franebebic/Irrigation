@@ -5,6 +5,7 @@ import com.fb.irrigation.mapper.ValveMapper;
 import com.fb.irrigation.model.Plot;
 import com.fb.irrigation.model.Valve;
 import com.fb.irrigation.model.ValveStatus;
+import com.fb.irrigation.mqtt.MqttPublisher;
 import com.fb.irrigation.repository.PlotRepository;
 import com.fb.irrigation.repository.ValveRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,6 +21,7 @@ public class ValveServiceImpl implements ValveService {
     private final ValveMapper valveMapper;
     private final ValveRepository valveRepository;
     private final PlotRepository plotRepository;
+    private final MqttPublisher mqttPublisher;
 
     @Override
     public ValveDTO save(ValveDTO dto) {
@@ -79,6 +81,11 @@ public class ValveServiceImpl implements ValveService {
 
         valve.setStatus(valve.getStatus().toggle());
         Valve saved = valveRepository.save(valve);
+
+        String topic = "valve/esp-valve-1/switch/valve_control/command";
+        String payload=(valve.getStatus()==ValveStatus.OPEN)?"ON":"OFF";
+        mqttPublisher.publish(topic, payload);
+
         return valveMapper.toDTO(saved);
     }
 }

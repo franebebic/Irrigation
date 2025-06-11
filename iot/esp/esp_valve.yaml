@@ -40,3 +40,42 @@ switch:
     id: valve_control
     output: valve_led
     retain: true
+
+spi:
+  clk_pin: GPIO18
+  mosi_pin: GPIO19
+
+font:
+  - file: "arial.ttf"
+    id: my_font
+    size: 18
+
+display:
+  - platform: st7789v
+    model: "TTGO TDisplay 135x240"
+    cs_pin: GPIO5
+    dc_pin: GPIO16
+    reset_pin: GPIO23
+    backlight_pin: GPIO4
+    rotation: 90
+    width: 135
+    height: 240
+    offset_height: 52
+    update_interval: 500ms
+    lambda: |-
+      it.fill(Color(0, 0, 0));
+      if (id(valve_control).state) {
+        it.print(10, 30, id(my_font), Color(0, 255, 0), "Valve: ON");
+      } else {
+        it.print(10, 30, id(my_font), Color(255, 0, 0), "Valve: OFF");
+      }
+
+
+
+
+
+
+
+   
+
+
