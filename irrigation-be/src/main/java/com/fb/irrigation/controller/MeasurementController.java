@@ -1,15 +1,15 @@
 package com.fb.irrigation.controller;
 
-import com.fb.irrigation.dto.MeasurementCreateRequest;
 import com.fb.irrigation.dto.MeasurementDTO;
 import com.fb.irrigation.service.MeasurementService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -19,20 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MeasurementController {
     private final MeasurementService measurementService;
-
-    @PostMapping("/from-esp")
-    public ResponseEntity<MeasurementDTO> createMeasurement(@Valid @RequestBody MeasurementCreateRequest dto) {
-        log.info("Received measurement from ESP: {}", dto); // ili samo dto.getSensorName(), getMeasuredValue()...
-
-        MeasurementDTO savedMeasurementDTO = measurementService.save(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedMeasurementDTO);
-    }
-
-    @PostMapping
-    public ResponseEntity<MeasurementDTO> createMeasurement(@Valid @RequestBody MeasurementDTO dto) {
-        MeasurementDTO savedMeasurementDTO = measurementService.save(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedMeasurementDTO);
-    }
 
     @GetMapping
     public ResponseEntity<Page<MeasurementDTO>> getMeasurements(

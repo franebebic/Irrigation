@@ -27,23 +27,12 @@ import java.util.List;
 public class MeasurementServiceImpl implements MeasurementService {
     private final MeasurementRepository measurementRepository;
     private final MeasurementMapper measurementMapper;
-    private final PlotRepository plotRepository;
     private final SensorRepository sensorRepository;
 
     @Override
-    public MeasurementDTO save(MeasurementCreateRequest createRequest) {
-        Measurement savedMeasurement = createMeasurementFromCreateRequest(createRequest);
-        return measurementMapper.toDTO(savedMeasurement);
-    }
-
-    @Override
     public void createFromMqtt(MeasurementCreateRequest dto) {
-        createMeasurementFromCreateRequest(dto);
-    }
-
-    private Measurement createMeasurementFromCreateRequest(MeasurementCreateRequest createRequest) {
-        Sensor sensor = sensorRepository.findByName(createRequest.getSensorName()).orElseThrow(() ->
-                new EntityNotFoundException("Sensor with name " + createRequest.getSensorName() + " not found"));
+        Sensor sensor = sensorRepository.findByName(dto.getSensorName()).orElseThrow(() ->
+                new EntityNotFoundException("Sensor with name " + dto.getSensorName() + " not found"));
 
         Plot plot = sensor.getPlot();
         if (plot == null)
@@ -59,21 +48,11 @@ public class MeasurementServiceImpl implements MeasurementService {
                 .plotIdSnapshot(plot.getId())
                 .plotNameSnapshot(plot.getName())
                 .measuredAt(localDateTime)
-                .measuredValue(createRequest.getMeasuredValue())
-                .type(createRequest.getType())
+                .measuredValue(dto.getMeasuredValue())
+                .type(dto.getType())
                 .build();
 
-        return measurementRepository.save(measurement);
-    }
-
-    public MeasurementDTO save(MeasurementDTO dto) {
-        Plot plot = plotRepository.findById(dto.getPlotId()).orElseThrow(() ->
-                new EntityNotFoundException("Plot with id " + dto.getPlotId() + " not found"));
-        Sensor sensor = sensorRepository.findById(dto.getSensorId()).orElseThrow(() ->
-                new EntityNotFoundException("Sensor with id " + dto.getSensorId() + " not found"));
-
-        Measurement measurement = measurementMapper.toEntity(dto, sensor, plot);
-        return measurementMapper.toDTO(measurementRepository.save(measurement));
+        measurementRepository.save(measurement);
     }
 
     @Override

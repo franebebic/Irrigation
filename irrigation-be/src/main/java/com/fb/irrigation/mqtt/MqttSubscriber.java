@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -24,7 +25,7 @@ public class MqttSubscriber {
     @PostConstruct
     public void subscribe() {
         try {
-            client = new MqttClient(properties.getBroker(), properties.getSubscriberClientId());
+            client = new MqttClient(properties.getBroker(), properties.getSubscriberClientId(), new MemoryPersistence());
             client.connect();
 
             client.subscribe(properties.getSensorsTopic(), (topic, message) -> {

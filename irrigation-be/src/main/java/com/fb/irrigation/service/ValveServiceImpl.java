@@ -86,6 +86,8 @@ public class ValveServiceImpl implements ValveService {
         String payload=(valve.getStatus()==ValveStatus.OPEN)?"ON":"OFF";
         mqttPublisher.publish(topic, payload);
 
+
+
         return valveMapper.toDTO(saved);
     }
 }
