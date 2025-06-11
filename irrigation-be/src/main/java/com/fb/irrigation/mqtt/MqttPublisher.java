@@ -10,7 +10,7 @@ public class MqttPublisher {
     private final MqttClient client;
 
     public MqttPublisher(MqttProperties properties) throws MqttException {
-        client = new MqttClient(properties.getBroker(), properties.getClientId());
+        client = new MqttClient(properties.getBroker(), properties.getPublisherClientId());
         MqttConnectOptions options = new MqttConnectOptions();
         options.setAutomaticReconnect(true);
         options.setCleanSession(true);

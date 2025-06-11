@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "mqtt")
 public class MqttProperties {
     private String broker;
-    private String clientId;
+    private String subscriberClientId;
+    private String publisherClientId;
     private String sensorsTopic;
 }

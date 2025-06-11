@@ -18,12 +18,13 @@ public class MqttSubscriber {
     private final ObjectMapper objectMapper;
     private final MeasurementService measurementService;
     private final MqttProperties properties;
+
     private MqttClient client;
 
     @PostConstruct
     public void subscribe() {
         try {
-            client = new MqttClient(properties.getBroker(), properties.getClientId());
+            client = new MqttClient(properties.getBroker(), properties.getSubscriberClientId());
             client.connect();
 
             client.subscribe(properties.getSensorsTopic(), (topic, message) -> {
@@ -46,14 +47,13 @@ public class MqttSubscriber {
     }
 
     @PreDestroy
-    public void cleanup() {
+    public void disconnect() {
         try {
-            if (client != null && client.isConnected()) {
-                client.disconnect();
-                client.close();
-            }
+            client.disconnect();
         } catch (MqttException e) {
-            log.error("Error during MQTT client shutdown ", e);
+            // ignore
         }
     }
 }
+
+
