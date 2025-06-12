@@ -22,6 +22,7 @@ public class ValveServiceImpl implements ValveService {
     private final ValveRepository valveRepository;
     private final PlotRepository plotRepository;
     private final MqttPublisher mqttPublisher;
+    private final ActivityService activityService;
 
     @Override
     public ValveDTO save(ValveDTO dto) {
@@ -86,7 +87,9 @@ public class ValveServiceImpl implements ValveService {
         String payload=(valve.getStatus()==ValveStatus.OPEN)?"ON":"OFF";
         mqttPublisher.publish(topic, payload);
 
+        Plot plot=valve.getPlot();
 
+        activityService.create(valve, valve.getStatus(), plot);
 
         return valveMapper.toDTO(saved);
     }
