@@ -10,4 +10,5 @@ public class MqttProperties {
     private String subscriberClientId;
     private String publisherClientId;
     private String sensorsTopic;
+    private String simTopic;
 }

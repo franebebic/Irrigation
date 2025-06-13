@@ -3,8 +3,10 @@ package com.fb.irrigation.service;
 import com.fb.irrigation.dto.ValveDTO;
 import com.fb.irrigation.mapper.ValveMapper;
 import com.fb.irrigation.model.Plot;
+import com.fb.irrigation.model.Sensor;
 import com.fb.irrigation.model.Valve;
 import com.fb.irrigation.model.ValveStatus;
+import com.fb.irrigation.mqtt.MqttProperties;
 import com.fb.irrigation.mqtt.MqttPublisher;
 import com.fb.irrigation.repository.PlotRepository;
 import com.fb.irrigation.repository.ValveRepository;
@@ -25,6 +27,7 @@ public class ValveServiceImpl implements ValveService {
     private final PlotRepository plotRepository;
     private final MqttPublisher mqttPublisher;
     private final ActivityService activityService;
+    private final MqttProperties mqttProperties;
 
     @Override
     public ValveDTO save(ValveDTO dto) {
@@ -95,6 +98,12 @@ public class ValveServiceImpl implements ValveService {
         Plot plot=valve.getPlot();
 
         activityService.create(valve, valve.getStatus(), plot);
+
+        for(Sensor sensor:plot.getSensors()){
+            String simTopic= mqttProperties.getSimTopic()+sensor.getName();
+            String simPayload=(valve.getStatus()==ValveStatus.OPEN)?"ON":"OFF";
+            mqttPublisher.publish(simTopic, simPayload);
+        }
 
         return valveMapper.toDTO(saved);
     }
