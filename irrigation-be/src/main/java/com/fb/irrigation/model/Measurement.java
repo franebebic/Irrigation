@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Data
@@ -48,8 +48,8 @@ public class Measurement {
     private MeasurementType type;
 
     @NotNull(message = "Measured date is mandatory")
-    @Column(nullable = false)
-    private LocalDateTime measuredAt;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private Instant measuredAt;
 
     @NotNull(message = "Measured value is mandatory")
     @Column(nullable = false)

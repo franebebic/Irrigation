@@ -7,7 +7,6 @@ import com.fb.irrigation.model.Measurement;
 import com.fb.irrigation.model.Plot;
 import com.fb.irrigation.model.Sensor;
 import com.fb.irrigation.repository.MeasurementRepository;
-import com.fb.irrigation.repository.PlotRepository;
 import com.fb.irrigation.repository.SensorRepository;
 import com.fb.irrigation.specification.MeasurementSpecification;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,7 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -38,8 +37,6 @@ public class MeasurementServiceImpl implements MeasurementService {
         if (plot == null)
             throw new IllegalStateException("Sensor with name " + sensor.getName() + " is not assigned to any plot");
 
-        LocalDateTime localDateTime = LocalDateTime.now();
-
         Measurement measurement = Measurement.builder()
                 .sensor(sensor)
                 .sensorIdSnapshot(sensor.getId())
@@ -47,7 +44,7 @@ public class MeasurementServiceImpl implements MeasurementService {
                 .plot(plot)
                 .plotIdSnapshot(plot.getId())
                 .plotNameSnapshot(plot.getName())
-                .measuredAt(localDateTime)
+                .measuredAt(Instant.now())
                 .measuredValue(dto.getMeasuredValue())
                 .type(dto.getType())
                 .build();

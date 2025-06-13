@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Data
 @Builder
@@ -26,7 +26,7 @@ public class MeasurementDTO {
     private MeasurementType type;
 
     @NotNull(message = "Measured date is mandatory")
-    private LocalDateTime measuredAt;
+    private Instant measuredAt;
 
     @NotNull(message = "Measured value is mandatory")
     private Double measuredValue;
