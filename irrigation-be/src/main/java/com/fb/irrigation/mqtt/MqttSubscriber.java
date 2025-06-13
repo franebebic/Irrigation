@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MqttSubscriber {
+    public static final int INDEX_OF_SENSOR_NAME = 1;
     private final ObjectMapper objectMapper;
     private final MeasurementService measurementService;
     private final MqttProperties properties;
@@ -34,6 +35,9 @@ public class MqttSubscriber {
 
                 try {
                     MeasurementCreateRequest dto = objectMapper.readValue(payload, MeasurementCreateRequest.class);
+                    String sensorName = getSensorNameFromTopic(topic);
+                    dto.setSensorName(sensorName);
+
                     measurementService.createFromMqtt(dto);
                 } catch (Exception e) {
                     log.error("Error while parsing MQTT message", e);
@@ -45,6 +49,11 @@ public class MqttSubscriber {
         } catch (MqttException e) {
             log.error("Error while connecting to MQTT broker", e);
         }
+    }
+
+    private static String getSensorNameFromTopic(String topic) {
+        String[] parts = topic.split("/");       // ["sensors", "<device_id>", "data"]
+        return parts[INDEX_OF_SENSOR_NAME];
     }
 
     @PreDestroy

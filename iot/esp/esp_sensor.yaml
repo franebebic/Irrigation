@@ -1,3 +1,7 @@
+substitutions:
+  sensor_name: "esp01"
+  ip_subaddress: "121"
+
 esphome:
   name: esp-sensor
 
@@ -17,7 +21,7 @@ wifi:
   password: "!bafi123"
 
   manual_ip:
-    static_ip: 192.168.100.122
+    static_ip: 192.168.100.${ip_subaddress}
     gateway: 192.168.100.1
     subnet: 255.255.255.0
 
@@ -32,27 +36,31 @@ mqtt:
   port: 1883
   username: ""           # Ako koristiš autentifikaciju, upiši korisničko ime
   password: ""           # Ako koristiš autentifikaciju, upiši lozinku
-  topic_prefix: "sensors/esp-sensor"  # Prefiks topic-a, možeš prilagoditi
+  topic_prefix: "sensors/${sensor_name}"  # Prefiks topic-a, možeš prilagoditi
 
 globals:
   - id: moisture
     type: float
     restore_value: no
-    initial_value: '50.0'
+    initial_value: '100.0'
 
 interval:
   - interval: 10s
     then:
       - lambda: |-
-          float value = 30.0 + (rand() % 40);  // Simulira vlagu 30–69%
-          id(moisture) = value;
-          ESP_LOGI("sensor", "Simulated moisture: %.1f%%", value);
+          // simuliraj pad vlažnosti 5–10% po minuti → 0.83–1.66% na 10s
+          static float val = 100.0f;
+          // rand() % 6 → [0..5], +5 → [5..10]
+          float delta = -((float)(rand() % 6 + 5) / 18.0f);
+          val = clamp(val + delta, 0.0f, 100.0f);
+          id(moisture) = val;
+          ESP_LOGI("sensor", "Simulated moisture: %.1f%%", val);
       - mqtt.publish:
-          topic: sensors/esp-sensor/data
+          topic: "sensors/${sensor_name}/data"
           payload: !lambda |-
             char buffer[100];
             snprintf(buffer, sizeof(buffer),
-                     "{\"sensorName\":\"ESP2\",\"type\":\"HUMIDITY\",\"measuredValue\":%.1f}",
+                     "{\"type\":\"HUMIDITY\",\"measuredValue\":%.1f}",
                      id(moisture));
             return std::string(buffer).c_str();
      
