@@ -1,25 +1,25 @@
 substitutions:
-  sensor_name: "esp01"
+  sensor_name: "esp1"
   ip_subaddress: "121"
 
 esphome:
   name: esp-sensor
+  friendly_name: Sensor
 
 esp32:
   board: esp32dev
-
-ota:
-  platform: esphome
-  password: "!32ESP_OTA_Password"
 
 logger:
 
 api:
 
+ota:
+  platform: esphome
+  password: "!32ESP_OTA_Password"
+
 wifi:
   ssid: "Bafarica"
   password: "!bafi123"
-
   manual_ip:
     static_ip: 192.168.100.${ip_subaddress}
     gateway: 192.168.100.1

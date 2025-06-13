@@ -6,6 +6,9 @@ set SOURCE_YAML=C:\Projects\irrigation-project\iot\esp\esp_valve.yaml
 set WORK_DIR=C:\esp-build
 set VENV_PATH=C:\Projects\irrigation-project\iot\esp\esphome-env
 set SERIAL_PORT=COM9
+set DEVICE_ID=2
+set DEVICE_NAME=valve%DEVICE_ID%
+set /A IP_SUBADDRESS=130+%DEVICE_ID%
 
 REM ----- Forsiraj PlatformIO build direktorije BEZ dijakritika -----
 set PLATFORMIO_CORE_DIR=C:\esp-platformio
@@ -23,7 +26,7 @@ call "%VENV_PATH%\Scripts\activate.bat"
 REM ----- Pokretanje builda -----
 cd /D "%WORK_DIR%"
 echo [INFO] Pokrećem esphome compile...
-esphome compile esp_valve.yaml
+esphome -s device_name %DEVICE_NAME% -s ip_subaddress %IP_SUBADDRESS%  compile esp_valve.yaml
 
 IF %ERRORLEVEL% EQU 0 (
     echo [SUCCESS] Build je uspješno završen.

@@ -10,11 +10,13 @@ import com.fb.irrigation.repository.PlotRepository;
 import com.fb.irrigation.repository.ValveRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ValveServiceImpl implements ValveService {
@@ -80,10 +82,13 @@ public class ValveServiceImpl implements ValveService {
     public ValveDTO toggle(Long id) {
         Valve valve = valveRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Valve with id " + id + " not found"));
 
+        log.info("Toggling valve: {}", valve.getName());
+
+
         valve.setStatus(valve.getStatus().toggle());
         Valve saved = valveRepository.save(valve);
 
-        String topic = "valve/esp-valve-1/switch/valve_control/command";
+        String topic = String.format("valve/%s/switch/valve_control/command", valve.getName()) ;
         String payload=(valve.getStatus()==ValveStatus.OPEN)?"ON":"OFF";
         mqttPublisher.publish(topic, payload);
 

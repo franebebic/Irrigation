@@ -1,6 +1,10 @@
+substitutions:
+  device_name: "esp1"
+  ip_subaddress: "131"
+
 esphome:
-  name: esp-valve-1
-  friendly_name: Valve 1
+  name: esp-valve
+  friendly_name: Valve
 
 esp32:
   board: esp32dev
@@ -17,7 +21,7 @@ wifi:
   ssid: "Bafarica"
   password: "!bafi123"
   manual_ip:
-    static_ip: 192.168.100.131
+    static_ip: 192.168.100.${ip_subaddress}
     gateway: 192.168.100.1
     subnet: 255.255.255.0
 
@@ -27,7 +31,7 @@ mqtt:
   username: ""
   password: ""
   discovery: false
-  topic_prefix: valve/esp-valve-1
+  topic_prefix: valve/${device_name}
 
 output:
   - platform: gpio
