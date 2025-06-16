@@ -13,7 +13,7 @@ export default function SensorFormDialog({ open, onOpenChange, onAddSensor, init
   // 1. Dohvati plots kad se dijalog otvori
   useEffect(() => {
     if (open) {
-      fetch("http://localhost:8080/api/plots")
+      fetch("/api/plots")
         .then(res => res.json())
         .then(setPlots);
     }
@@ -40,8 +40,8 @@ export default function SensorFormDialog({ open, onOpenChange, onAddSensor, init
 
     const method = initialData ? "PUT" : "POST";
     const url = initialData
-      ? `http://localhost:8080/api/sensors/${initialData.id}`
-      : "http://localhost:8080/api/sensors";
+      ? `/api/sensors/${initialData.id}`
+      : "/api/sensors";
 
     const response = await fetch(url, {
       method,

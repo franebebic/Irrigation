@@ -1,0 +1,27 @@
+# Verzijski sustavi
+.git
+.gitignore
+
+# Node i FE build artefakti
+**/node_modules
+**/dist
+**/.vite
+**/.parcel-cache
+
+# IDE konfiguracije
+.vscode
+.idea
+
+# Logovi i privremeni fajlovi
+*.log
+*.tmp
+
+# Docker i Compose fajlovi
+.dockerignore
+Dockerfile
+dev.Dockerfile
+docker-compose.override.yml
+
+# Env varijable (ako se builda iz root konteksta)
+.env
+.env.*

@@ -32,8 +32,8 @@ export default function CropFormDialog({ open, onOpenChange, onAddCrop, initialD
 
     const method = initialData ? "PUT" : "POST";
     const url = initialData
-      ? `http://localhost:8080/api/crops/${initialData.id}`
-      : "http://localhost:8080/api/crops";
+      ? `/api/crops/${initialData.id}`
+      : "/api/crops";
 
     const response = await fetch(url, {
       method,

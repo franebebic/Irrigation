@@ -17,8 +17,8 @@ export default function PlantationFormDialog({ open, onOpenChange, onAddPlantati
 
   useEffect(() => {
     if (open) {
-      fetch("http://localhost:8080/api/crops").then(res => res.json()).then(setCrops);
-      fetch("http://localhost:8080/api/plots").then(res => res.json()).then(setPlots);
+      fetch("/api/crops").then(res => res.json()).then(setCrops);
+      fetch("/api/plots").then(res => res.json()).then(setPlots);
     }
   }, [open]);
 
@@ -61,8 +61,8 @@ useEffect(() => {
 
     const method = initialData ? "PUT" : "POST";
     const url = initialData
-      ? `http://localhost:8080/api/plantations/${initialData.id}`
-      : "http://localhost:8080/api/plantations";
+      ? `/api/plantations/${initialData.id}`
+      : "/api/plantations";
 
     const response = await fetch(url, {
       method,

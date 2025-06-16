@@ -52,7 +52,7 @@ spi:
 font:
   - file: "arial.ttf"
     id: my_font
-    size: 18
+    size: 40
 
 display:
   - platform: st7789v
