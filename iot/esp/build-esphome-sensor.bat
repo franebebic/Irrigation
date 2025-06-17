@@ -5,8 +5,8 @@ REM ----- Lokacije -----
 set SOURCE_YAML=C:\Projects\irrigation-project\iot\esp\esp_sensor.yaml
 set WORK_DIR=C:\esp-build
 set VENV_PATH=C:\Projects\irrigation-project\iot\esp\esphome-env
-set SERIAL_PORT=COM8
-set SENSOR_ID=2
+set SERIAL_PORT=COM7
+set SENSOR_ID=1
 set SENSOR_NAME=sensor%SENSOR_ID%
 set /A IP_SUBADDRESS=120+%SENSOR_ID%
 

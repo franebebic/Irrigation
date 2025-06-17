@@ -1,0 +1,103 @@
+substitutions:
+  sensor_name: "esp1"
+  ip_subaddress: "121"
+
+esphome:
+  name: esp-sensor
+  friendly_name: "Sensor ${sensor_name}"
+
+esp32:
+  board: esp32dev
+
+logger:
+  level: INFO
+
+api:
+
+ota:
+  platform: esphome
+  password: "!32ESP_OTA_Password"
+
+wifi:
+  ssid: "Bafarica"
+  password: "!bafi123"
+  manual_ip:
+    static_ip: 192.168.100.${ip_subaddress}
+    gateway: 192.168.100.1
+    subnet: 255.255.255.0
+  ap:
+    ssid: "esp_sensor_setup"
+    password: "12345678"
+
+captive_portal:
+
+mqtt:
+  broker: 192.168.100.10
+  port: 1883
+  username: ""
+  password: ""
+  topic_prefix: "sensors/${sensor_name}"
+  # Pretplata na testnu temu za uključivanje/isključivanje simuliranog navodnjavanja
+  on_message:
+    - topic: "sim/irrigation/${sensor_name}"
+      payload: "ON"
+      then:
+        - lambda: |-
+            id(irrigation_on) = true;
+            ESP_LOGI("irrigation","ON");
+    - topic: "sim/irrigation/${sensor_name}"
+      payload: "OFF"
+      then:
+        - lambda: |-
+            id(irrigation_on) = false;
+            ESP_LOGI("irrigation","OFF");
+
+globals:
+  - id: moisture
+    type: float
+    restore_value: no
+    initial_value: '100.0'
+  - id: irrigation_on
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
+interval:
+  - interval: 10s
+    then:
+      - lambda: |-
+          // simulacija vlažnosti
+          static float val = id(moisture);
+          float delta;
+          if (id(irrigation_on)) {
+            // rast 5–10 % svakih 10s
+            delta = (float)(rand() % 6 + 5);
+          } else {
+            // pad 5–10 % po minuti → 0.83–1.66 % po 10s
+            delta = -((float)(rand() % 6 + 5) / 6.0f);
+          }
+          val = clamp(val + delta, 0.0f, 100.0f);
+          id(moisture) = val;
+          ESP_LOGI("sensor","Moisture: %.1f%% (irrig=%s)",
+                   val, id(irrigation_on) ? "ON" : "OFF");
+      - mqtt.publish:
+          topic: "sensors/${sensor_name}/data"
+          payload: !lambda |-
+            char buf[80];
+            snprintf(buf, sizeof(buf),
+                     "{\"type\":\"HUMIDITY\",\"measuredValue\":%.1f}",
+                     id(moisture));
+            return std::string(buf).c_str();
+
+sensor:
+  - platform: template
+    name: "Simulated Moisture"
+    id: sim_moisture
+    unit_of_measurement: "%"
+    update_interval: 10s
+    lambda: |-
+      return id(moisture);
+
+binary_sensor:
+  - platform: status
+    name: "ESP Sensor Status"
