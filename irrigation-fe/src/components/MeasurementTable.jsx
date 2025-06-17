@@ -19,8 +19,8 @@ export default function MeasurementTable({ measurements }) {
           <tr key={m.id}>
             <td className="p-2 border-b">{new Date(m.measuredAt).toLocaleString()}</td>
             <td className="p-2 border-b">{m.type}</td>
-            <td className="p-2 border-b">{m.sensorName}</td>
-            <td className="p-2 border-b">{m.plotName}</td>
+            <td className="p-2 border-b">{m.sensorNameSnapshot}</td>
+            <td className="p-2 border-b">{m.plotNameSnapshot}</td>
             <td className="p-2 border-b">{m.measuredValue}</td>
           </tr>
         ))}
