@@ -1,6 +1,7 @@
 package com.fb.irrigation.controller;
 
 import com.fb.irrigation.dto.ValveDTO;
+import com.fb.irrigation.model.ActivityType;
 import com.fb.irrigation.service.ValveService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,6 @@ public class ValveController {
 
     @PutMapping("/{id}/toggle")
     public ResponseEntity<ValveDTO> toggleValve(@PathVariable Long id) {
-        return ResponseEntity.ok(valveService.toggle(id));
+        return ResponseEntity.ok(valveService.toggle(id, ActivityType.MANUAL));
     }
 }

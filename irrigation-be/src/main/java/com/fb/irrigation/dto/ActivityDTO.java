@@ -6,7 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.Duration;
+import java.time.Instant;
 
 @Data
 @Builder
@@ -26,9 +27,9 @@ public class ActivityDTO {
     @NotNull private String valveNameSnapshot;
 
     @NotNull(message = "Start datetime is mandatory")
-    private LocalDateTime startTime;
-
-    private LocalDateTime endTime;
+    private Instant startTime;
+    private Instant endTime;
+    private Duration duration;
 
     @NotNull private ActivityStatus status;
 }

@@ -15,7 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,21 +24,44 @@ import java.util.List;
 public class ActivityServiceImpl implements ActivityService {
     private final ActivityRepository activityRepository;
     private final ActivityMapper activityMapper;
-    private final PlotRepository plotRepository;
-    private final ValveRepository valveRepository;
 
     @Override
-    public void create(Valve valve, ValveStatus status, Plot plot) {
+    public void create(Valve valve, ValveStatus status, ActivityType activityType) {
+        ActivityStatus activityStatus=null;
+        Duration duration=null;
+        Instant startTime=null;
+        Instant endTime=null;
+
+        switch (status){
+            case OPEN -> {
+                activityStatus=ActivityStatus.RUNNING;
+                startTime=Instant.now();
+            }
+            case CLOSED -> {
+                activityStatus=ActivityStatus.EXECUTED;
+                Activity previousActivity=activityRepository.findTopByValveOrderByStartTimeDesc(valve).orElseThrow(() -> new IllegalStateException("No activity found for valve "+ valve.getName()));
+                if(previousActivity.getStatus()!=ActivityStatus.RUNNING)
+                    throw new IllegalStateException("Last activity for valve "+ valve.getName()+" was not RUNNING but "+previousActivity.getStatus());
+
+                startTime=previousActivity.getStartTime();
+                endTime=Instant.now();
+                duration= Duration.between(startTime, endTime);
+            }
+        }
+        Plot plot=valve.getPlot();
+
         Activity activity = Activity.builder()
-                .type(ActivityType.MANUAL)
+                .type(activityType)
                 .valve(valve)
                 .valveIdSnapshot(valve.getId())
                 .valveNameSnapshot(valve.getName())
                 .plot(plot)
                 .plotIdSnapshot(plot.getId())
                 .plotNameSnapshot(plot.getName())
-                .status(ActivityStatus.RUNNING)
-                .startTime(LocalDateTime.now())
+                .status(activityStatus)
+                .startTime(startTime)
+                .endTime(endTime)
+                .duration(duration)
                 .build();
         activityRepository.save(activity);
     }

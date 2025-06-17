@@ -1,6 +1,7 @@
 package com.fb.irrigation.service;
 
 import com.fb.irrigation.dto.ValveDTO;
+import com.fb.irrigation.model.ActivityType;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface ValveService {
     Optional<ValveDTO> findById(Long id);
     void deleteById(Long id);
     ValveDTO update(Long id, @Valid ValveDTO dto);
-    ValveDTO toggle(Long id);
+    ValveDTO toggle(Long id, ActivityType manual);
 }

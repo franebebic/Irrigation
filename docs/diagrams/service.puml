@@ -16,7 +16,8 @@ package "Backend" {
   [PostgreSQL DB] as DB
   [Kafka Broker] as Kafka
   [MQTT Broker (Mosquitto)] as MQTT
-  [IrrigationDecisionService] as IDS
+  [IrrigationDecisionService(Spring Boot)] as IDS
+
 }
 
 ' External services
@@ -49,6 +50,5 @@ IDS --> Kafka : command event
 Kafka --> BE : consume
 
 IDS --> Weather : REST API
-IDS --> BE : REST (aggregated data)
 
 @enduml

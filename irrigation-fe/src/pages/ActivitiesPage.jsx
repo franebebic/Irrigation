@@ -5,9 +5,7 @@ import ActivityTable from "@/components/ActivityTable";
 
 export default function ActivitiesPage() {
   const [activitiesPage, setActivitiesPage] = useState(null);
-  const [valveOptions, setValveOptions] = useState([]);
   const [plotOptions, setPlotOptions] = useState([]);
-  const [valveName, setValveName] = useState("");
   const [plotName, setPlotName] = useState("");
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(() => {
@@ -23,7 +21,6 @@ export default function ActivitiesPage() {
           params: {
             page,
             size,
-            ...(valveName && { valveName }),
             ...(plotName && { plotName }),
           },
         })
@@ -34,11 +31,10 @@ export default function ActivitiesPage() {
     fetchData();
     const intervalId = setInterval(fetchData, 15000);
     return () => clearInterval(intervalId);
-  }, [page, size, valveName, plotName]);
+  }, [page, size, plotName]);
 
   // Dohvati opcije za filtere (samo jednom)
   useEffect(() => {
-    axios.get("/api/activities/valve-options").then((res) => setValveOptions(res.data));
     axios.get("/api/activities/plot-options").then((res) => setPlotOptions(res.data));
   }, []);
 
@@ -50,25 +46,6 @@ export default function ActivitiesPage() {
 
       {/* FILTERI */}
       <div className="mb-4 flex gap-4">
-        <div>
-          <label className="block text-sm font-medium mb-1">Valve name</label>
-          <input
-            list="valve-list"
-            value={valveName}
-            onChange={(e) => {
-              setValveName(e.target.value);
-              setPage(0);
-            }}
-            placeholder="All valves"
-            className="border px-2 py-1 rounded w-48"
-          />
-          <datalist id="valve-list">
-            {valveOptions.map((s) => (
-              <option key={s} value={s} />
-            ))}
-          </datalist>
-        </div>
-
         <div>
           <label className="block text-sm font-medium mb-1">Plot name</label>
           <input

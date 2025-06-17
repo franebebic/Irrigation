@@ -26,6 +26,7 @@ public class ActivityMapper {
                 .status(activity.getStatus())
                 .startTime(activity.getStartTime())
                 .endTime(activity.getEndTime())
+                .duration(activity.getDuration())
                 .build();
     }
 
@@ -42,6 +43,7 @@ public class ActivityMapper {
                 .status(dto.getStatus())
                 .startTime(dto.getStartTime())
                 .endTime(dto.getEndTime())
+                .duration(dto.getDuration())
                 .build();
     }
 }

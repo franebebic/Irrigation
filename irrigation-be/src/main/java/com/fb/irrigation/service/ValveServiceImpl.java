@@ -2,10 +2,7 @@ package com.fb.irrigation.service;
 
 import com.fb.irrigation.dto.ValveDTO;
 import com.fb.irrigation.mapper.ValveMapper;
-import com.fb.irrigation.model.Plot;
-import com.fb.irrigation.model.Sensor;
-import com.fb.irrigation.model.Valve;
-import com.fb.irrigation.model.ValveStatus;
+import com.fb.irrigation.model.*;
 import com.fb.irrigation.mqtt.MqttProperties;
 import com.fb.irrigation.mqtt.MqttPublisher;
 import com.fb.irrigation.repository.PlotRepository;
@@ -82,29 +79,35 @@ public class ValveServiceImpl implements ValveService {
     }
 
     @Override
-    public ValveDTO toggle(Long id) {
+    public ValveDTO toggle(Long id, ActivityType activityType) {
         Valve valve = valveRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Valve with id " + id + " not found"));
-
         log.info("Toggling valve: {}", valve.getName());
-
-
         valve.setStatus(valve.getStatus().toggle());
         Valve saved = valveRepository.save(valve);
 
+        notifyValve(valve);
+        _simNotifySensors(valve);
+        createActivity(activityType, valve);
+
+        return valveMapper.toDTO(saved);
+    }
+
+    private void createActivity(ActivityType activityType, Valve valve) {
+        activityService.create(valve, valve.getStatus(), activityType);
+    }
+
+    private void notifyValve(Valve valve) {
         String topic = String.format("valve/%s/switch/valve_control/command", valve.getName()) ;
         String payload=(valve.getStatus()==ValveStatus.OPEN)?"ON":"OFF";
         mqttPublisher.publish(topic, payload);
+    }
 
+    private void _simNotifySensors(Valve valve) {
         Plot plot=valve.getPlot();
-
-        activityService.create(valve, valve.getStatus(), plot);
-
-        for(Sensor sensor:plot.getSensors()){
+        for(Sensor sensor: plot.getSensors()){
             String simTopic= mqttProperties.getSimTopic()+sensor.getName();
             String simPayload=(valve.getStatus()==ValveStatus.OPEN)?"ON":"OFF";
             mqttPublisher.publish(simTopic, simPayload);
         }
-
-        return valveMapper.toDTO(saved);
     }
 }

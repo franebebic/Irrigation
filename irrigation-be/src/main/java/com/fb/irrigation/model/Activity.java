@@ -1,5 +1,6 @@
 package com.fb.irrigation.model;
 
+import com.fb.irrigation.converter.DurationToLongConverter;
 import com.fb.irrigation.validation.ValidActivityTime;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.Duration;
+import java.time.Instant;
 
 @ValidActivityTime
 @Entity
@@ -51,10 +53,14 @@ public class Activity {
 
     @NotNull(message = "Start datetime is mandatory")
     @Column(nullable = false)
-    private LocalDateTime startTime;
+    private Instant startTime;
 
     @Column()
-    private LocalDateTime endTime;
+    private Instant endTime;
+
+    @Convert(converter = DurationToLongConverter.class)
+    @Column()
+    private Duration duration;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
