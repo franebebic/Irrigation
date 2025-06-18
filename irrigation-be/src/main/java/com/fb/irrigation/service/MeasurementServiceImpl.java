@@ -2,6 +2,8 @@ package com.fb.irrigation.service;
 
 import com.fb.irrigation.dto.MeasurementCreateRequest;
 import com.fb.irrigation.dto.MeasurementDTO;
+import com.fb.irrigation.kafka.event.MeasurementEvent;
+import com.fb.irrigation.kafka.service.KafkaProducerService;
 import com.fb.irrigation.mapper.MeasurementMapper;
 import com.fb.irrigation.model.Measurement;
 import com.fb.irrigation.model.Plot;
@@ -27,6 +29,7 @@ public class MeasurementServiceImpl implements MeasurementService {
     private final MeasurementRepository measurementRepository;
     private final MeasurementMapper measurementMapper;
     private final SensorRepository sensorRepository;
+    private final KafkaProducerService kafkaProducerService;
 
     @Override
     public void createFromMqtt(MeasurementCreateRequest dto) {
@@ -50,6 +53,19 @@ public class MeasurementServiceImpl implements MeasurementService {
                 .build();
 
         measurementRepository.save(measurement);
+
+        publishKafkaEvent(measurement);
+    }
+
+    private void publishKafkaEvent(Measurement measurement) {
+        MeasurementEvent measurementEvent=MeasurementEvent.builder()
+                .plotId(measurement.getPlot().getId())
+                .sensorId(measurement.getSensor().getId())
+                .sensorType(measurement.getType().name())
+                .measuredValue(measurement.getMeasuredValue())
+                .measuredAt(measurement.getMeasuredAt())
+                .build();
+        kafkaProducerService.publishMeasurementEvent(measurementEvent);
     }
 
     @Override

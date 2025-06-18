@@ -1,4 +1,4 @@
-package com.fb.irrigation_decision_service.model;
+package com.fb.irrigation.kafka.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

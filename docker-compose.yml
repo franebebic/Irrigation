@@ -32,6 +32,18 @@ services:
     ports:
       - "8080:8080"
 
+  decision-service:
+    build:
+      context: ./irrigation-decision-service
+    container_name: irrigation-decision-service
+    restart: unless-stopped
+    depends_on:
+      - kafka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    networks:
+      - irrigation-net
+
   frontend:
     build:
       context: ./irrigation-fe
@@ -101,3 +113,7 @@ services:
 volumes:
   pgdata:
   grafana-storage:
+
+networks:
+  irrigation-net:
+    driver: bridge

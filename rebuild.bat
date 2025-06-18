@@ -8,7 +8,9 @@ echo ==== Removing unused images ====
 docker image prune -f
 
 echo ==== Building containers from scratch ====
-docker-compose build --no-cache
+REM docker-compose build --no-cache
+docker-compose build
+
 IF ERRORLEVEL 1 GOTO error
 
 echo ==== Starting containers ====
