@@ -1,6 +1,7 @@
 package com.fb.irrigation.service;
 
 import com.fb.irrigation.dto.ValveDTO;
+import com.fb.irrigation.kafka.command.IrrigationCommandType;
 import com.fb.irrigation.mapper.ValveMapper;
 import com.fb.irrigation.model.*;
 import com.fb.irrigation.mqtt.MqttProperties;
@@ -82,26 +83,38 @@ public class ValveServiceImpl implements ValveService {
 
     @Override
     @Transactional
-    public void changeState(Long id, String command, ActivityType activityType) {
+    public void changeState(Long id, IrrigationCommandType command, ActivityType activityType) {
         Valve valve = valveRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Valve with id " + id + " not found"));
 
-        if (command != null) {
-            if (command.equals("OPEN") && valve.getStatus() == ValveStatus.CLOSED) {
-                valve.setStatus(ValveStatus.OPEN);
-                log.info("Toggling valve: {} to status {}", valve.getName(), valve.getStatus());
-                updateValve(activityType, valve);
-            } else if (command.equals("CLOSE") && valve.getStatus() == ValveStatus.OPEN) {
-                valve.setStatus(ValveStatus.CLOSED);
-                log.info("Toggling valve: {} to status {}", valve.getName(), valve.getStatus());
-                updateValve(activityType, valve);
+        switch (command) {
+            case OPEN -> {
+                if (valve.getStatus() == ValveStatus.OPEN) {
+                    log.info("Command OPEN ignored — valve {} already OPEN", valve.getName());
+                    return;
+                }
+                applyStateChange(activityType, valve, ValveStatus.OPEN);
             }
+            case CLOSE -> {
+                if (valve.getStatus() == ValveStatus.CLOSED) {
+                    log.info("Command CLOSE ignored — valve {} already CLOSED", valve.getName());
+                    return;
+                }
+                applyStateChange(activityType, valve, ValveStatus.CLOSED);
+            }
+            default -> throw new IllegalArgumentException("Unsupported command: " + command);
         }
+    }
+
+    private void applyStateChange(ActivityType activityType, Valve valve, ValveStatus valveStatus) {
+        valve.setStatus(valveStatus);
+        log.info("Toggling valve: {} to status {}", valve.getName(), valveStatus);
+        updateValve(activityType, valve);
     }
 
     @Override
     public ValveDTO toggle(Long id, ActivityType type) {
         Valve valve = valveRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Valve with id " + id + " not found"));
-        log.info("Toggling valve: {}", valve.getName());
+        log.info("Toggling valve: {} from {} to {}", valve.getName(), valve.getStatus(), valve.getStatus().toggle());
 
         valve.setStatus(valve.getStatus().toggle());
 

@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class IrrigationCommandEvent {
     private Long plotId;
     private Long valveId;
-    private String command; // npr. "OPEN" ili "CLOSE"
+    private IrrigationCommandType command;
     private String reason;  // slobodno tekstualno, npr. "Auto decision due to low moisture"
 }
