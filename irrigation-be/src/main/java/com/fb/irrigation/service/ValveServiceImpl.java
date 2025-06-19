@@ -10,7 +10,9 @@ import com.fb.irrigation.repository.ValveRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -79,17 +81,41 @@ public class ValveServiceImpl implements ValveService {
     }
 
     @Override
-    public ValveDTO toggle(Long id, ActivityType activityType) {
+    @Transactional
+    public void changeState(Long id, String command, ActivityType activityType) {
+        Valve valve = valveRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Valve with id " + id + " not found"));
+
+        if (command != null) {
+            if (command.equals("OPEN") && valve.getStatus() == ValveStatus.CLOSED) {
+                valve.setStatus(ValveStatus.OPEN);
+                log.info("Toggling valve: {} to status {}", valve.getName(), valve.getStatus());
+                updateValve(activityType, valve);
+            } else if (command.equals("CLOSE") && valve.getStatus() == ValveStatus.OPEN) {
+                valve.setStatus(ValveStatus.CLOSED);
+                log.info("Toggling valve: {} to status {}", valve.getName(), valve.getStatus());
+                updateValve(activityType, valve);
+            }
+        }
+    }
+
+    @Override
+    public ValveDTO toggle(Long id, ActivityType type) {
         Valve valve = valveRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Valve with id " + id + " not found"));
         log.info("Toggling valve: {}", valve.getName());
-        valve.setStatus(valve.getStatus().toggle());
-        Valve saved = valveRepository.save(valve);
 
-        notifyValve(valve);
-        _simNotifySensors(valve);
-        createActivity(activityType, valve);
+        valve.setStatus(valve.getStatus().toggle());
+
+        Valve saved = updateValve(type, valve);
 
         return valveMapper.toDTO(saved);
+    }
+
+    private @NotNull Valve updateValve(ActivityType type, Valve valve) {
+        Valve saved = valveRepository.save(valve);
+        notifyValve(valve);
+        _simNotifySensors(valve);
+        createActivity(type, saved);
+        return saved;
     }
 
     private void createActivity(ActivityType activityType, Valve valve) {
@@ -97,16 +123,16 @@ public class ValveServiceImpl implements ValveService {
     }
 
     private void notifyValve(Valve valve) {
-        String topic = String.format("valve/%s/switch/valve_control/command", valve.getName()) ;
-        String payload=(valve.getStatus()==ValveStatus.OPEN)?"ON":"OFF";
+        String topic = String.format("valve/%s/switch/valve_control/command", valve.getName());
+        String payload = (valve.getStatus() == ValveStatus.OPEN) ? "ON" : "OFF";
         mqttPublisher.publish(topic, payload);
     }
 
     private void _simNotifySensors(Valve valve) {
-        Plot plot=valve.getPlot();
-        for(Sensor sensor: plot.getSensors()){
-            String simTopic= mqttProperties.getSimTopic()+sensor.getName();
-            String simPayload=(valve.getStatus()==ValveStatus.OPEN)?"ON":"OFF";
+        Plot plot = valve.getPlot();
+        for (Sensor sensor : plot.getSensors()) {
+            String simTopic = mqttProperties.getSimTopic() + sensor.getName();
+            String simPayload = (valve.getStatus() == ValveStatus.OPEN) ? "ON" : "OFF";
             mqttPublisher.publish(simTopic, simPayload);
         }
     }

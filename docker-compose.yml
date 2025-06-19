@@ -59,6 +59,8 @@ services:
       - backend
     ports:
       - "80:80"  # NGINX servira frontend
+    networks:
+      - irrigation-net
 
   grafana:
     image: grafana/grafana
@@ -77,6 +79,8 @@ services:
       - grafana-storage:/var/lib/grafana
     depends_on:
       - postgres
+    networks:
+      - irrigation-net
 
   mosquitto:
     image: eclipse-mosquitto

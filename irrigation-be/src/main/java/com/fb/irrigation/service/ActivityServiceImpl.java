@@ -4,10 +4,9 @@ import com.fb.irrigation.dto.ActivityDTO;
 import com.fb.irrigation.mapper.ActivityMapper;
 import com.fb.irrigation.model.*;
 import com.fb.irrigation.repository.ActivityRepository;
-import com.fb.irrigation.repository.PlotRepository;
-import com.fb.irrigation.repository.ValveRepository;
 import com.fb.irrigation.specification.ActivitySpecification;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +18,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ActivityServiceImpl implements ActivityService {
@@ -32,6 +32,7 @@ public class ActivityServiceImpl implements ActivityService {
         Instant startTime=null;
         Instant endTime=null;
 
+
         switch (status){
             case OPEN -> {
                 activityStatus=ActivityStatus.RUNNING;
@@ -39,15 +40,18 @@ public class ActivityServiceImpl implements ActivityService {
             }
             case CLOSED -> {
                 activityStatus=ActivityStatus.EXECUTED;
-                Activity previousActivity=activityRepository.findTopByValveOrderByStartTimeDesc(valve).orElseThrow(() -> new IllegalStateException("No activity found for valve "+ valve.getName()));
-                if(previousActivity.getStatus()!=ActivityStatus.RUNNING)
-                    throw new IllegalStateException("Last activity for valve "+ valve.getName()+" was not RUNNING but "+previousActivity.getStatus());
+                if(activityRepository.findTopByValveOrderByStartTimeDesc(valve).isPresent()) {
+                    Activity previousActivity = activityRepository.findTopByValveOrderByStartTimeDesc(valve).get();
+                    if (previousActivity.getStatus() != ActivityStatus.RUNNING)
+                        throw new IllegalStateException("Last activity for valve " + valve.getName() + " was not RUNNING but " + previousActivity.getStatus());
 
-                startTime=previousActivity.getStartTime();
-                endTime=Instant.now();
-                duration= Duration.between(startTime, endTime);
+                    startTime = previousActivity.getStartTime();
+                    endTime = Instant.now();
+                    duration = Duration.between(startTime, endTime);
+                }
             }
         }
+
         Plot plot=valve.getPlot();
 
         Activity activity = Activity.builder()

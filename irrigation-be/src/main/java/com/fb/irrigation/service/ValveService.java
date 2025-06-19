@@ -13,5 +13,7 @@ public interface ValveService {
     Optional<ValveDTO> findById(Long id);
     void deleteById(Long id);
     ValveDTO update(Long id, @Valid ValveDTO dto);
+    void changeState(Long id, String command, ActivityType manual);
     ValveDTO toggle(Long id, ActivityType manual);
+
 }

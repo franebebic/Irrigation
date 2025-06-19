@@ -3,10 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.0</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>com.fb.irrigation</groupId>
+		<artifactId>irrigation-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<groupId>com.fb</groupId>
 	<artifactId>irrigation-decision-service</artifactId>
@@ -51,11 +50,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.kafka</groupId>
-			<artifactId>spring-kafka-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
@@ -68,6 +62,23 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
+		<dependency>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>24.0.1</version> <!-- ili najnovija stabilna -->
+		</dependency>
+		<dependency>
+			<groupId>com.fb</groupId>
+			<artifactId>irrigation-events</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fb</groupId>
+			<artifactId>irrigation-events</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
     </dependencies>
 
 	<build>

@@ -3,15 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>com.fb.irrigation</groupId>
+		<artifactId>irrigation-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<groupId>com.fb</groupId>
 	<artifactId>irrigation-be</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>irrigation</name>
+	<name>irrigation-be</name>
 	<description>Irrigation system</description>
 	<url/>
 	<licenses>
@@ -90,7 +89,23 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>26.0.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fb</groupId>
+			<artifactId>irrigation-events</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
