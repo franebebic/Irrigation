@@ -25,3 +25,5 @@ docker-compose.override.yml
 # Env varijable (ako se builda iz root konteksta)
 .env
 .env.*
+
+target

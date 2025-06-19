@@ -1,11 +1,9 @@
-# Build stage
 FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
 WORKDIR /app
 COPY . .
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -pl irrigation-decision-service -am
 
-# Runtime stage
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-COPY --from=build /app/target/irrigation-decision-service-*.jar app.jar
+COPY --from=build /app/irrigation-decision-service/target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]

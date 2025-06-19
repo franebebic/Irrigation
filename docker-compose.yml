@@ -17,7 +17,8 @@ services:
 
   backend:
     build:
-      context: ./irrigation-be
+      context: .
+      dockerfile: irrigation-be/Dockerfile
     container_name: irrigation-backend
     restart: unless-stopped
     depends_on:
@@ -40,7 +41,8 @@ services:
 
   decision-service:
     build:
-      context: ./irrigation-decision-service
+      context: .
+      dockerfile: irrigation-decision-service/Dockerfile
     container_name: irrigation-decision-service
     restart: unless-stopped
     depends_on:
