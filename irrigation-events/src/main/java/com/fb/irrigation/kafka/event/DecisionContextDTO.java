@@ -20,7 +20,7 @@ public class DecisionContextDTO {
     @NotNull
     private Long valveId;
     private String valveName;
-    private boolean valveCurrentlyOpen;
+    private ValveStatus valveStatus;
 
     @NotNull
     private List<MoistureThresholdDTO> moistureThresholds;

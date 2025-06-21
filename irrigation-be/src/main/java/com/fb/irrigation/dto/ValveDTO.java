@@ -1,6 +1,6 @@
 package com.fb.irrigation.dto;
 
-import com.fb.irrigation.model.ValveStatus;
+import com.fb.irrigation.kafka.event.ValveStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;

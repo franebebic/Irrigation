@@ -3,7 +3,7 @@ package com.fb.irrigation.service;
 import com.fb.irrigation.dto.ActivityDTO;
 import com.fb.irrigation.model.ActivityType;
 import com.fb.irrigation.model.Valve;
-import com.fb.irrigation.model.ValveStatus;
+import com.fb.irrigation.kafka.event.ValveStatus;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

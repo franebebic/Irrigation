@@ -45,25 +45,29 @@ public class IrrigationEvaluationListener {
         String plotName = context.getPlotName() != null ? context.getPlotName() : "UNKNOWN";
         String valveName = context.getValveName() != null ? context.getValveName() : "UNKNOWN";
 
-        if (irrigationDecisionService.shouldIrrigate(event, context)) {
-
-            log.info("\uD83D\uDCA7 IDS decided to irrigate plot {} by turning valve {} ON", plotName, valveName);
-            IrrigationCommandEvent command = IrrigationCommandEvent.builder()
-                    .command(IrrigationCommandType.OPEN)
-                    .reason("Moisture low on plot " + plotName)
-                    .valveId(context.getValveId())
-                    .plotId(context.getPlotId())
-                    .build();
-            kafkaProducerService.sendIrrigationCommand(command);
-        } else {
-            IrrigationCommandEvent command = IrrigationCommandEvent.builder()
-                    .command(IrrigationCommandType.CLOSE)
-                    .reason("Moisture high on plot " + plotName)
-                    .valveId(context.getValveId())
-                    .plotId(context.getPlotId())
-                    .build();
-            kafkaProducerService.sendIrrigationCommand(command);
-            log.info("⛔ IDS decided NOT to irrigate plot {} yet!", plotName);
+        IrrigationCommandType commandType = irrigationDecisionService.evaluateCommand(event, context);
+        switch (commandType) {
+            case OPEN -> {
+                log.info("\uD83D\uDCA7 IDS decided to irrigate plot {} by turning valve {} ON", plotName, valveName);
+                IrrigationCommandEvent command = IrrigationCommandEvent.builder()
+                        .command(IrrigationCommandType.OPEN)
+                        .reason("Moisture low on plot " + plotName)
+                        .valveId(context.getValveId())
+                        .plotId(context.getPlotId())
+                        .build();
+                kafkaProducerService.sendIrrigationCommand(command);
+            }
+            case CLOSE -> {
+                IrrigationCommandEvent command = IrrigationCommandEvent.builder()
+                        .command(IrrigationCommandType.CLOSE)
+                        .reason("Moisture high on plot " + plotName)
+                        .valveId(context.getValveId())
+                        .plotId(context.getPlotId())
+                        .build();
+                kafkaProducerService.sendIrrigationCommand(command);
+                log.info("⛔ IDS decided to stop irrigate plot {} by turning valve {} OFF!", plotName, valveName);
+            }
+            case NONE -> log.info("No action on plot {}!", plotName);
         }
     }
 

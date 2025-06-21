@@ -4,7 +4,7 @@ import com.fb.irrigation.kafka.event.DecisionContextDTO;
 import com.fb.irrigation.kafka.event.MoistureThresholdDTO;
 import com.fb.irrigation.model.Plantation;
 import com.fb.irrigation.model.Plot;
-import com.fb.irrigation.model.ValveStatus;
+import com.fb.irrigation.kafka.event.ValveStatus;
 import com.fb.irrigation.repository.PlotRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class ContextService {
                     .plotName(plot.getName())
                     .valveId(plot.getValve().getId())
                     .valveName(plot.getValve().getName())
-                    .valveCurrentlyOpen(plot.getValve().getStatus() == ValveStatus.OPEN)
+                    .valveStatus(plot.getValve().getStatus())
                     .moistureThresholds(getMoistureThresholdDTOS(plot))
                     .build();
 

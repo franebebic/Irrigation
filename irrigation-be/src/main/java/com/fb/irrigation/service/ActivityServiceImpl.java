@@ -1,6 +1,7 @@
 package com.fb.irrigation.service;
 
 import com.fb.irrigation.dto.ActivityDTO;
+import com.fb.irrigation.kafka.event.ValveStatus;
 import com.fb.irrigation.mapper.ActivityMapper;
 import com.fb.irrigation.model.*;
 import com.fb.irrigation.repository.ActivityRepository;

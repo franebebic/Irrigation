@@ -1,4 +1,4 @@
-package com.fb.irrigation.model;
+package com.fb.irrigation.kafka.event;
 
 public enum ValveStatus {
     OPEN,

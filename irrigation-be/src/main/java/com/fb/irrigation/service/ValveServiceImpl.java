@@ -2,6 +2,7 @@ package com.fb.irrigation.service;
 
 import com.fb.irrigation.dto.ValveDTO;
 import com.fb.irrigation.kafka.command.IrrigationCommandType;
+import com.fb.irrigation.kafka.event.ValveStatus;
 import com.fb.irrigation.mapper.ValveMapper;
 import com.fb.irrigation.model.*;
 import com.fb.irrigation.mqtt.MqttProperties;
