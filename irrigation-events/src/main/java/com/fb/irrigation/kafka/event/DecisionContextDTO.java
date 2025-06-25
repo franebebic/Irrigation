@@ -17,7 +17,6 @@ public class DecisionContextDTO {
     private Long plotId;
     private String plotName;
 
-    @NotNull
     private Long valveId;
     private String valveName;
     private ValveStatus valveStatus;

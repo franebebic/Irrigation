@@ -1,5 +1,6 @@
 package com.fb.irrigation_decision_service.rule.rules;
 
+import com.fb.irrigation_decision_service.rule.FactKey;
 import org.jeasy.rules.annotation.Action;
 import org.jeasy.rules.annotation.Condition;
 import org.jeasy.rules.annotation.Fact;
@@ -16,6 +17,6 @@ public class LowMoistureRule {
 
     @Action
     public void setFlag(Facts facts) {
-        facts.put("shouldStartIrrigation", true);
+        facts.put(FactKey.MOISTURE_LOW.getKey(), true);
     }
 }

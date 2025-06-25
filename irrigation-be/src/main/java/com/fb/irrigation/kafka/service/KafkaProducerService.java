@@ -28,6 +28,5 @@ public class KafkaProducerService {
 
     public void publishDecisionContext(DecisionContextDTO decisionContextDTO) {
         kafkaTemplateDecisionContext.send(decisionContextTopic, decisionContextDTO);
-        log.debug("Publishing DecisionContext for plot: {}", decisionContextDTO.getPlotName());
     }
 }

@@ -29,6 +29,13 @@ public class RuleEngineService {
         facts.put(FactKey.RAIN_EXPECTED_IN_NEXT_12H.toString(), rainExpected);
         facts.put(FactKey.VALVE_CURRENT_STATUS.toString(), valveStatus);
 
+        // 🟡 Inicijaliziraj "derived" facts koje druga pravila mogu koristiti
+        facts.put(FactKey.MOISTURE_LOW.toString(), false);
+        facts.put(FactKey.SKIP_IRRIGATION_DUE_TO_RAIN.toString(), false);
+        facts.put(FactKey.SHOULD_START_IRRIGATION.toString(), false);
+        facts.put(FactKey.SHOULD_STOP_IRRIGATION.toString(), false);
+        facts.put(FactKey.IRRIGATION_COMMAND.toString(), IrrigationCommandType.NONE);
+
         Rules rules = new Rules();
         rules.register(new LowMoistureRule());
         rules.register(new RainExpectedRule());

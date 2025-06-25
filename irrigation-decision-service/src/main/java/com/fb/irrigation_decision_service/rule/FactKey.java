@@ -11,6 +11,8 @@ public enum FactKey {
     MOISTURE_MIN_THRESHOLD("moistureMinThreshold"),
     MOISTURE_MAX_THRESHOLD("moistureMaxThreshold"),
     RAIN_EXPECTED_IN_NEXT_12H("rainExpectedInNext12h"),
+    MOISTURE_LOW("moistureLow"),
+    SKIP_IRRIGATION_DUE_TO_RAIN("skipIrrigationDueToRain"),
     SHOULD_START_IRRIGATION("shouldStartIrrigation"),
     SHOULD_STOP_IRRIGATION("shouldStopIrrigation"),
     VALVE_CURRENT_STATUS("valveCurrentStatus"),

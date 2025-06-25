@@ -1,5 +1,6 @@
 package com.fb.irrigation_decision_service.rule.rules;
 
+import com.fb.irrigation_decision_service.rule.FactKey;
 import org.jeasy.rules.annotation.Action;
 import org.jeasy.rules.annotation.Condition;
 import org.jeasy.rules.annotation.Fact;
@@ -10,12 +11,12 @@ import org.jeasy.rules.api.Facts;
 public class RainExpectedRule {
 
     @Condition
-    public boolean isRainExpected(@Fact("rainExpectedWithin12h") Boolean rainExpected) {
+    public boolean isRainExpected(@Fact("rainExpectedInNext12h") Boolean rainExpected) {
         return rainExpected;
     }
 
     @Action
     public void markRainExpected(Facts facts) {
-        facts.put("skipIrrigationDueToRain", true);
+        facts.put(FactKey.SKIP_IRRIGATION_DUE_TO_RAIN.getKey(), true);
     }
 }

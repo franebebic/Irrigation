@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @ToString(exclude = "plot")
+@EqualsAndHashCode(exclude = "plot")
 public class Valve {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

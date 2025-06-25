@@ -1,10 +1,14 @@
 package com.fb.irrigation.service;
 
+import com.fb.irrigation.context.ContextPublisherService;
 import com.fb.irrigation.dto.ValveDTO;
 import com.fb.irrigation.kafka.command.IrrigationCommandType;
 import com.fb.irrigation.kafka.event.ValveStatus;
 import com.fb.irrigation.mapper.ValveMapper;
-import com.fb.irrigation.model.*;
+import com.fb.irrigation.model.ActivityType;
+import com.fb.irrigation.model.Plot;
+import com.fb.irrigation.model.Sensor;
+import com.fb.irrigation.model.Valve;
 import com.fb.irrigation.mqtt.MqttProperties;
 import com.fb.irrigation.mqtt.MqttPublisher;
 import com.fb.irrigation.repository.PlotRepository;
@@ -29,24 +33,7 @@ public class ValveServiceImpl implements ValveService {
     private final MqttPublisher mqttPublisher;
     private final ActivityService activityService;
     private final MqttProperties mqttProperties;
-
-    @Override
-    public ValveDTO save(ValveDTO dto) {
-        Plot plot = null;
-        if (dto.getPlotId() != null)
-            plot = plotRepository.findById(dto.getPlotId()).orElseThrow(() -> new EntityNotFoundException("Plot with id " + dto.getPlotId() + " not found"));
-
-        if (dto.getStatus() == null)
-            dto.setStatus(ValveStatus.CLOSED);
-
-        Optional<Valve> existing = valveRepository.findByPlotId(dto.getPlotId());
-        if (existing.isPresent() && !existing.get().getId().equals(dto.getId())) {
-            throw new IllegalStateException("Plot '" + existing.get().getPlot().getName() + "' already has valve '" + existing.get().getName() + "'");
-        }
-
-        Valve valve = valveMapper.toEntity(dto, plot);
-        return valveMapper.toDTO(valveRepository.save(valve));
-    }
+    private final ContextPublisherService contextPublisherService;
 
     @Override
     public List<ValveDTO> findAll() {
@@ -93,43 +80,60 @@ public class ValveServiceImpl implements ValveService {
                     log.info("Command OPEN ignored — valve {} already OPEN", valve.getName());
                     return;
                 }
-                applyStateChange(activityType, valve, ValveStatus.OPEN);
+                applyStateChange(valve, ValveStatus.OPEN, activityType);
             }
             case CLOSE -> {
                 if (valve.getStatus() == ValveStatus.CLOSED) {
                     log.info("Command CLOSE ignored — valve {} already CLOSED", valve.getName());
                     return;
                 }
-                applyStateChange(activityType, valve, ValveStatus.CLOSED);
+                applyStateChange(valve, ValveStatus.CLOSED, activityType);
             }
             default -> throw new IllegalArgumentException("Unsupported command: " + command);
         }
     }
 
-    private void applyStateChange(ActivityType activityType, Valve valve, ValveStatus valveStatus) {
-        valve.setStatus(valveStatus);
-        log.info("Toggling valve: {} to status {}", valve.getName(), valveStatus);
-        updateValve(activityType, valve);
-    }
-
     @Override
     public ValveDTO toggle(Long id, ActivityType type) {
         Valve valve = valveRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Valve with id " + id + " not found"));
-        log.info("Toggling valve: {} from {} to {}", valve.getName(), valve.getStatus(), valve.getStatus().toggle());
-
-        valve.setStatus(valve.getStatus().toggle());
-
-        Valve saved = updateValve(type, valve);
-
+        Valve saved = applyStateChange(valve, valve.getStatus().toggle(), type);
         return valveMapper.toDTO(saved);
     }
 
-    private @NotNull Valve updateValve(ActivityType type, Valve valve) {
+    @Override
+    public ValveDTO save(ValveDTO dto) {
+        Plot plot = null;
+        if (dto.getPlotId() != null)
+            plot = plotRepository.findById(dto.getPlotId()).orElseThrow(() -> new EntityNotFoundException("Plot with id " + dto.getPlotId() + " not found"));
+
+        if (dto.getStatus() == null)
+            dto.setStatus(ValveStatus.CLOSED);
+
+        Optional<Valve> existing = valveRepository.findByPlotId(dto.getPlotId());
+        if (existing.isPresent() && !existing.get().getId().equals(dto.getId())) {
+            throw new IllegalStateException("Plot '" + existing.get().getPlot().getName() + "' already has valve '" + existing.get().getName() + "'");
+        }
+
+        Valve valve = valveMapper.toEntity(dto, plot);
+        return valveMapper.toDTO(valveRepository.save(valve));
+    }
+
+
+    private @NotNull Valve applyStateChange(Valve valve, ValveStatus valveStatus, ActivityType activityType) {
+        log.info("Switching valve: {} from {} to {}", valve.getName(), valve.getStatus(),valveStatus);
+        valve.setStatus(valveStatus);
+
         Valve saved = valveRepository.save(valve);
-        notifyValve(valve);
-        _simNotifySensors(valve);
-        createActivity(type, saved);
+        notifyValve(saved);
+        notifyIrrigationDecisionService(valve);
+        _simNotifySensors(saved);
+        createActivity(activityType, saved);
         return saved;
+    }
+
+    private void notifyIrrigationDecisionService(Valve valve) {
+        Plot plot=valve.getPlot();
+        contextPublisherService.sendDecisionContext(plot);
     }
 
     private void createActivity(ActivityType activityType, Valve valve) {
