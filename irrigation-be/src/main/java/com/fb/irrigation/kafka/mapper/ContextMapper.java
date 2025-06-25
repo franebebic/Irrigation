@@ -21,6 +21,8 @@ public class ContextMapper {
         return DecisionContextDTO.builder()
                 .plotId(plot.getId())
                 .plotName(plot.getName())
+                .latitude(plot.getLatitude())
+                .longitude(plot.getLongitude())
                 .valveId(valve!=null?valve.getId():null)
                 .valveName(valve!=null?valve.getName():null)
                 .valveStatus(valve!=null?valve.getStatus():null)

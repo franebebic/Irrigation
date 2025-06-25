@@ -9,12 +9,16 @@ public class PlotMapper {
 
     public void updateEntity(PlotDTO updatedPlot, Plot plot) {
         plot.setName(updatedPlot.getName());
+        plot.setLatitude(updatedPlot.getLatitude());
+        plot.setLongitude(updatedPlot.getLongitude());
     }
 
     public Plot toEntity(PlotDTO dto) {
         return Plot.builder()
                 .id(dto.getId())
                 .name(dto.getName())
+                .latitude(dto.getLatitude())
+                .longitude(dto.getLongitude())
                 .build();
     }
 
@@ -22,6 +26,8 @@ public class PlotMapper {
         return PlotDTO.builder()
                 .id(plot.getId())
                 .name(plot.getName())
+                .latitude(plot.getLatitude())
+                .longitude(plot.getLongitude())
                 .build();
     }
 }

@@ -11,4 +11,6 @@ public class PlotDTO {
 
     @NotNull(message = "Name is mandatory")
     private String name;
+    private Double latitude;
+    private Double longitude;
 }

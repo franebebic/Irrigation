@@ -25,6 +25,9 @@ public class Plot {
     @Column(nullable = false)
     private String name;
 
+    private Double latitude;
+    private Double longitude;
+
     @OneToOne (mappedBy = "plot", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Valve valve;
 

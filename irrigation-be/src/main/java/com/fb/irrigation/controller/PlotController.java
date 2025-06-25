@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/plots")
 @RequiredArgsConstructor
@@ -61,10 +63,15 @@ public class PlotController {
     @Operation(summary = "Update an existing plot")
     @PutMapping("/{id}")
     public ResponseEntity<PlotDTO> updatePlot(@PathVariable Long id, @Valid @RequestBody PlotDTO updatedPlot) {
+
         Plot plot = plotService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plot not found"));
 
+        log.info("Updating plotDTO{} plot {}",updatedPlot, plot);
+
         plotMapper.updateEntity(updatedPlot, plot);
+
+        log.info("Upadted entity{}", plot);
 
         Plot saved = plotService.save(plot);
         return ResponseEntity.ok(plotMapper.toDTO(saved));

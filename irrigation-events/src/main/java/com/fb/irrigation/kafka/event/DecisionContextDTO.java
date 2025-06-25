@@ -17,6 +17,9 @@ public class DecisionContextDTO {
     private Long plotId;
     private String plotName;
 
+    private Double latitude;
+    private Double longitude;
+
     private Long valveId;
     private String valveName;
     private ValveStatus valveStatus;
