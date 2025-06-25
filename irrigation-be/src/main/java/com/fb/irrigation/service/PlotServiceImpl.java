@@ -1,5 +1,6 @@
 package com.fb.irrigation.service;
 
+import com.fb.irrigation.context.ContextPublisherService;
 import com.fb.irrigation.model.Plot;
 import com.fb.irrigation.repository.PlantationRepository;
 import com.fb.irrigation.repository.PlotRepository;
@@ -16,9 +17,11 @@ import java.util.Optional;
 public class PlotServiceImpl implements PlotService{
     private final PlotRepository plotRepository;
     private final PlantationRepository plantationRepository;
+    private final ContextPublisherService contextPublisherService;
 
     @Override
     public Plot save(Plot plot) {
+        contextPublisherService.sendDecisionContext(plot);
         return plotRepository.save(plot);
     }
 
