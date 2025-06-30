@@ -53,8 +53,8 @@ A modular and extensible system for automated irrigation, combining IoT (ESP32 +
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/irrigation-system.git
-cd irrigation-system
+git clone https://github.com/franebebic/Irrigation.git
+cd irrigation
 ```
 
 ### 2. Start with Docker Compose
@@ -65,9 +65,8 @@ docker-compose up --build
 
 ### 3. Access the system
 
-- Backend API: `http://localhost:8080/swagger-ui.html`
-- Frontend (React): `http://localhost:3000`
-- pgAdmin: `http://localhost:5050`
+- Frontend (React): `http://localhost:80`
+- pgAdmin: `http://localhost:5432`
 - Grafana: `http://localhost:3001`
 
 ---
