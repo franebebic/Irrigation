@@ -115,12 +115,14 @@ Grafana dashboards are embedded into the frontend to display real-time data and 
 ## 🖼️ Screenshots
 
 ### Web Application UI
-
-![Dashboard](docs/screenshots/dashboard.png)
-*Example of the irrigation dashboard.*
+![Edit plot](docs/screenshots/edit_plot.png)
+*Editing plot location for the precise Weather forecast.*
 
 ![Manual Valve Control](docs/screenshots/manual_valve.png)
 *Manual valve control interface.*
+
+![Dashboard](docs/screenshots/dashboard.png)
+*Example of the irrigation dashboard.*
 
 ---
 
