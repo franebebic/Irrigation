@@ -24,7 +24,7 @@ A modular and extensible system for automated irrigation, combining IoT (ESP32 +
 - 💧 Manual and automatic irrigation
 - 🧠 Rule-based decision engine (Easy Rules)
 - 📍 Plot selection via interactive map
-- 🔄 Secure communication via MQTT (TLS)
+- 🔄 IOT communication via MQTT
 - 📊 Grafana dashboard embedding
 - ☁️ Weather-based irrigation logic
 
@@ -141,6 +141,7 @@ Grafana dashboards are embedded into the frontend to display real-time data and 
 - [x] Rule-based irrigation engine
 - [x] Interactive map for plot definition
 - [x] Measurement history
+- [ ] Multitenant environment
 - [ ] User notifications (email/SMS)
 - [ ] Mobile-optimized frontend
 - [ ] Admin dashboard for rule tuning
@@ -151,7 +152,7 @@ Grafana dashboards are embedded into the frontend to display real-time data and 
 
 **Frane Bebić**  
 Split, Croatia  
-[LinkedIn](https://www.linkedin.com/in/frane-bebic)
+[LinkedIn](https://www.linkedin.com/in/franebebic)
 
 ---
 
