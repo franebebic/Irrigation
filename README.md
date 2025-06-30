@@ -6,14 +6,14 @@ A modular and extensible system for automated irrigation, combining IoT (ESP32 +
 
 ## 📌 Technologies Used
 
-- ESP32 with ESPHome
-- MQTT (Mosquitto broker)
 - Spring Boot (Java 17)
 - PostgreSQL
 - Apache Kafka
 - React
 - Docker + Docker Compose
 - Grafana (visualization)
+- ESP32 with ESPHome
+- MQTT (Mosquitto broker)
 - OpenWeatherMap API
 
 ---
