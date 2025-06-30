@@ -112,6 +112,28 @@ Grafana dashboards are embedded into the frontend to display real-time data and 
 
 ---
 
+## 🖼️ Screenshots
+
+### Web Application UI
+
+![Dashboard](docs/screenshots/dashboard.png)
+*Example of the irrigation dashboard.*
+
+![Manual Valve Control](docs/screenshots/manual_valve.png)
+*Manual valve control interface.*
+
+---
+
+### 📷 Real Devices
+
+![ESP Sensor](docs/screenshots/esp_sensor.jpg)
+*ESP32 with capacitive soil moisture sensor.*
+
+![ESP Valve](docs/screenshots/esp_valve_on.jpg)
+*ESP32 connected to a solenoid valve via relay.*
+
+---
+
 ## ✅ Roadmap
 
 - [x] MQTT communication with ESP devices
