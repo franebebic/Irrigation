@@ -12,6 +12,7 @@ package "Irrigation" {
   User --> (Add Sensor)
   User --> (Add Valve)
   User --> (Measurement history overview)
+  User --> (Activity history overview)
   User --> (Manual irrigation)
   System --> (Automatic irrigation)
 }
