@@ -151,7 +151,7 @@ Grafana dashboards are embedded into the frontend to display real-time data and 
 
 **Frane Bebić**  
 Split, Croatia  
-[LinkedIn](https://www.linkedin.com/in/frane-bebic)
+[LinkedIn](https://www.linkedin.com/in/franebebic)
 
 ---
 
