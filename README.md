@@ -131,7 +131,7 @@ Grafana dashboards are embedded into the frontend to display real-time data and 
 *ESP32 with capacitive soil moisture sensor.*
 
 ![ESP Valve](docs/screenshots/esp_valve_on.jpg)
-*ESP32 connected to a solenoid valve via relay.*
+*ESP32 ready for connection to a solenoid valve via relay.*
 
 ---
 
@@ -141,6 +141,7 @@ Grafana dashboards are embedded into the frontend to display real-time data and 
 - [x] Rule-based irrigation engine
 - [x] Interactive map for plot definition
 - [x] Measurement history
+- [ ] LLM chat interface
 - [ ] Multitenant environment
 - [ ] User notifications (email/SMS)
 - [ ] Mobile-optimized frontend
