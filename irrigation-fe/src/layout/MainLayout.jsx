@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Footer from "@/components/Footer";
+import UserProfile from "@/components/UserProfile";
 
 const sections = [
   {
@@ -47,7 +48,15 @@ export default function MainLayout() {
     <div className="flex flex-col min-h-screen bg-muted/40">
       <div className="flex flex-1">
         <aside className="w-64 border-r bg-white p-4 shadow-sm">
-          <div className="text-2xl font-bold mb-6">🌿 Irrigation</div>
+          <div className="flex items-center justify-between gap-3 mb-6 min-w-0">
+            <div className="text-xl font-bold whitespace-nowrap">
+              Irrigation
+            </div>
+
+            <div className="max-w-[220px] min-w-0">
+              <UserProfile />
+            </div>
+          </div>
 
           {sections.map(({ label, items }) => (
             <div key={label} className="mb-4">
