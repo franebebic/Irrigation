@@ -1,0 +1,26 @@
+# fly.toml app configuration file for Mosquitto MQTT
+app = 'irrigation-mqtt'
+primary_region = 'fra'
+
+[build]
+
+[experimental]
+auto_stop_machines = false
+auto_start_machines = true
+
+[[services]]
+internal_port = 8883
+protocol = "tcp"
+
+[[services.ports]]
+port = "10000"  # vanjski port koji Fly izlaže
+handlers = []   # prazno za TCP
+
+[[services.tcp_checks]]
+interval = 10000
+timeout = 2000
+
+[[vm]]
+memory = '1gb'
+cpu_kind = 'shared'
+cpus = 1
