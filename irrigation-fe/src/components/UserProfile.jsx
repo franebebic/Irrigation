@@ -4,8 +4,8 @@ import { LogOut } from "lucide-react";
 function getDisplayName() {
     const t = keycloak.tokenParsed || {};
     return (
+        t.name ||  // Koristimo name polje koje sadrži puno ime
         t.preferred_username ||
-        t.name ||
         t.email ||
         "User"
     );
@@ -36,11 +36,6 @@ export default function UserProfile() {
                 <div className="text-sm font-medium leading-none truncate max-w-[140px]">
                     {name}
                 </div>
-                {keycloak.tokenParsed?.email && (
-                    <div className="text-xs text-muted-foreground truncate max-w-[140px]">
-                        {keycloak.tokenParsed.email}
-                    </div>
-                )}
             </div>
 
             <button

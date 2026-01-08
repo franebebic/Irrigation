@@ -47,14 +47,10 @@ export default function MainLayout() {
   return (
     <div className="flex flex-col min-h-screen bg-muted/40">
       <div className="flex flex-1">
-        <aside className="w-64 border-r bg-white p-4 shadow-sm">
+        <aside className="w-64 border-r bg-white p-4 shadow-sm flex flex-col pb-20">
           <div className="flex items-center justify-between gap-3 mb-6 min-w-0">
             <div className="text-xl font-bold whitespace-nowrap">
               Irrigation
-            </div>
-
-            <div className="max-w-[220px] min-w-0">
-              <UserProfile />
             </div>
           </div>
 
@@ -100,13 +96,15 @@ export default function MainLayout() {
               </nav>
             </div>
           ))}
+          <div className="mt-auto max-w-[220px] min-w-0">
+            <UserProfile />
+          </div>
         </aside>
 
-<main className={cn("flex-1", location.pathname === "/dashboard" ? "p-0" : "p-6")}>
-  <Outlet />
-</main>
+        <main className={cn("flex-1", location.pathname === "/dashboard" ? "p-0" : "p-6")}>
+          <Outlet />
+        </main>
       </div>
-
       <Footer />
     </div>
   );
