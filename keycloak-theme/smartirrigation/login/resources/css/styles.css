@@ -1,0 +1,210 @@
+:root {
+    --bg: #f3f4f6;
+    --card: #ffffff;
+    --left: #f9fafb;
+    --border: #e5e7eb;
+    --text: #111827;
+    --muted: #6b7280;
+    --link: #2563eb;
+
+    --radius: 14px;
+    --shadow: 0 10px 30px rgba(17, 24, 39, 0.10);
+
+    --input-border: #d1d5db;
+    --input-focus: #9ca3af;
+
+    --btn: #1f2937;
+    --btn-hover: #111827;
+}
+
+/* Page canvas */
+html, body { height: 100%; }
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+}
+
+/* Center the card */
+.login-pf-page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 32px 16px;
+    background: transparent !important;
+}
+
+/* Remove Keycloak header (your top "smartirrigation") if you don't want it */
+#kc-header {
+    display: none;
+}
+
+/* Card as split layout */
+.card-pf.si-card {
+    width: min(1080px, 100%);
+    margin: 0 !important;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0; /* important: Keycloak card-pf often has padding */
+}
+
+/* Left panel */
+.si-left {
+    padding: 40px 44px;
+    background: var(--left);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.si-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 28px;
+    font-weight: 650;
+}
+
+.si-illustration {
+    width: 100%;
+    max-width: 440px;
+    opacity: 0.75;
+}
+
+.si-tagline {
+    margin-top: auto;
+    font-size: 22px;
+    line-height: 1.45;
+}
+
+.si-tagline span {
+    display: block;
+}
+
+/* Right panel */
+.si-right {
+    padding: 48px 54px 26px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Title + subtitle */
+#kc-page-title {
+    margin: 0 0 6px;
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    color: var(--text);
+}
+
+.si-subtitle {
+    margin: 0 0 22px;
+    color: var(--muted);
+    font-size: 18px;
+}
+
+/* Labels */
+label.pf-c-form__label-text {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 650;
+    color: var(--text);
+}
+
+/* Inputs */
+.pf-c-form-control {
+    width: 100%;
+    height: 52px;
+    padding: 0 16px;
+    border: 1px solid var(--input-border);
+    border-radius: 10px;
+    font-size: 18px;
+    outline: none;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+    background: #fff;
+}
+
+.pf-c-form-control:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 4px rgba(156, 163, 175, 0.35);
+}
+
+/* Password group */
+.pf-c-input-group {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.pf-c-input-group .pf-c-form-control {
+    flex: 1 1 auto;
+}
+
+.pf-c-input-group .pf-c-button.pf-m-control {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    border: 1px solid var(--input-border);
+    background: #fff;
+    cursor: pointer;
+}
+
+/* Primary button */
+#kc-login.pf-c-button.pf-m-primary {
+    width: 100%;
+    height: 58px;
+    border-radius: 12px;
+    border: 0;
+    background: var(--btn);
+    color: #fff;
+    font-size: 22px;
+    font-weight: 650;
+    cursor: pointer;
+    box-shadow: 0 10px 18px rgba(17, 24, 39, 0.18);
+    transition: transform 80ms ease, background 120ms ease, box-shadow 120ms ease;
+}
+
+#kc-login.pf-c-button.pf-m-primary:hover {
+    background: var(--btn-hover);
+    box-shadow: 0 14px 26px rgba(17, 24, 39, 0.22);
+}
+
+#kc-login.pf-c-button.pf-m-primary:active {
+    transform: translateY(1px);
+}
+
+/* Footer inside right panel */
+.si-footer {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 16px;
+}
+
+/* Responsive: stack panels */
+@media (max-width: 980px) {
+    .card-pf.si-card {
+        grid-template-columns: 1fr;
+    }
+    .si-left {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+    }
+    .si-right {
+        padding: 34px 22px 22px;
+    }
+    #kc-page-title {
+        font-size: 32px;
+    }
+}
