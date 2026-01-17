@@ -1,210 +1,405 @@
 :root {
-    --bg: #f3f4f6;
+    --bg: #0b0f14;
     --card: #ffffff;
-    --left: #f9fafb;
-    --border: #e5e7eb;
-    --text: #111827;
-    --muted: #6b7280;
-    --link: #2563eb;
-
-    --radius: 14px;
-    --shadow: 0 10px 30px rgba(17, 24, 39, 0.10);
-
-    --input-border: #d1d5db;
-    --input-focus: #9ca3af;
-
-    --btn: #1f2937;
-    --btn-hover: #111827;
+    --text: #0f172a;
+    --border: #e2e8f0;
+    --shadow: 0 18px 60px rgba(0,0,0,.35);
+    --radius: 16px;
+    --primary: #1f2a37;
+    --primaryHover: #111827
 }
 
-/* Page canvas */
-html, body { height: 100%; }
-body {
-    margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-    color: var(--text);
-    background: var(--bg);
+.login-pf {
+    background: var(--bg)!important
 }
 
-/* Center the card */
+.login-pf-page {
+    display: grid;
+    place-items: center
+}
+
+.si-wrap {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow)
+}
+
+.si-left {
+    background: #111827;
+    display: grid;
+    place-items: center
+}
+
+.si-right {
+    color: var(--text)
+}
+
+.si-field {
+    margin-bottom: 16px
+}
+
+.si-label {
+    display: block
+}
+
+.si-input {
+    width: 100%;
+    border: 1px solid var(--border);
+    outline: 0
+}
+
+.si-button {
+    width: 100%;
+    background: var(--primary)
+}
+
+.si-button:hover {
+    background: var(--primaryHover);
+    background: #111827
+}
+
+@media (max-width:900px) {
+    .si-wrap {
+        grid-template-columns: 1fr
+    }
+}
+
 .login-pf-page {
     min-height: 100vh;
-    display: grid;
-    place-items: center;
-    padding: 32px 16px;
-    background: transparent !important;
-}
-
-/* Remove Keycloak header (your top "smartirrigation") if you don't want it */
-#kc-header {
-    display: none;
-}
-
-/* Card as split layout */
-.card-pf.si-card {
-    width: min(1080px, 100%);
-    margin: 0 !important;
-
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0; /* important: Keycloak card-pf often has padding */
-}
-
-/* Left panel */
-.si-left {
-    padding: 40px 44px;
-    background: var(--left);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-}
-
-.si-brand {
+    min-height: 100svh;
     display: flex;
     align-items: center;
-    gap: 14px;
-    font-size: 28px;
-    font-weight: 650;
+    justify-content: center;
+    padding: 32px 16px
 }
 
-.si-illustration {
-    width: 100%;
-    max-width: 440px;
-    opacity: 0.75;
+body,html {
+    height: 100%
 }
 
-.si-tagline {
-    margin-top: auto;
-    font-size: 22px;
-    line-height: 1.45;
+body.login-pf {
+    background: linear-gradient(180deg,#f8fafc 0,#eef2f7 100%)!important
 }
 
-.si-tagline span {
+.login-pf,.login-pf-page,body,body.login-pf,html {
+    background: #eef2f7!important;
+    background-image: none!important
+}
+
+#kc-header,#kc-header-wrapper,.login-pf-page-header {
+    display: none!important
+}
+
+.card-pf {
+    box-shadow: none!important;
+    border: 0!important;
+    padding: 0!important
+}
+
+#kc-content,#kc-content-wrapper,.card-pf {
+    background: 0 0!important
+}
+
+.si-wrap {
+    width: min(980px,100%);
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(15,23,42,.08);
+    overflow: hidden;
+    display: grid
+}
+
+.si-left {
+    background: #f3f4f6;
+    gap: 18px;
+    border-right: 1px solid #e5e7eb
+}
+
+.si-hero {
     display: block;
-}
-
-/* Right panel */
-.si-right {
-    padding: 48px 54px 26px;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Title + subtitle */
-#kc-page-title {
-    margin: 0 0 6px;
-    font-size: 38px;
-    font-weight: 700;
-    letter-spacing: -0.4px;
-    color: var(--text);
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background: 0 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none
 }
 
 .si-subtitle {
-    margin: 0 0 22px;
-    color: var(--muted);
-    font-size: 18px;
+    margin: 0 0 18px
 }
 
-/* Labels */
-label.pf-c-form__label-text {
-    display: inline-block;
-    margin-bottom: 10px;
-    font-size: 16px;
-    font-weight: 650;
-    color: var(--text);
+.si-footer small {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #9ca3af
 }
 
-/* Inputs */
-.pf-c-form-control {
-    width: 100%;
-    height: 52px;
-    padding: 0 16px;
-    border: 1px solid var(--input-border);
+.si-button {
+    margin-top: 8px;
+    height: 48px;
     border-radius: 10px;
-    font-size: 18px;
-    outline: none;
-    transition: border-color 120ms ease, box-shadow 120ms ease;
-    background: #fff;
-}
-
-.pf-c-form-control:focus {
-    border-color: var(--input-focus);
-    box-shadow: 0 0 0 4px rgba(156, 163, 175, 0.35);
-}
-
-/* Password group */
-.pf-c-input-group {
-    display: flex;
-    align-items: stretch;
-    gap: 10px;
-}
-
-.pf-c-input-group .pf-c-form-control {
-    flex: 1 1 auto;
-}
-
-.pf-c-input-group .pf-c-button.pf-m-control {
-    width: 52px;
-    height: 52px;
-    border-radius: 10px;
-    border: 1px solid var(--input-border);
-    background: #fff;
-    cursor: pointer;
-}
-
-/* Primary button */
-#kc-login.pf-c-button.pf-m-primary {
-    width: 100%;
-    height: 58px;
-    border-radius: 12px;
-    border: 0;
-    background: var(--btn);
+    background: #1f2937;
     color: #fff;
-    font-size: 22px;
-    font-weight: 650;
+    font-size: 15px;
+    font-weight: 600;
+    border: 0;
     cursor: pointer;
-    box-shadow: 0 10px 18px rgba(17, 24, 39, 0.18);
-    transition: transform 80ms ease, background 120ms ease, box-shadow 120ms ease;
+    transition: background .15s ease,transform .05s ease
 }
 
-#kc-login.pf-c-button.pf-m-primary:hover {
-    background: var(--btn-hover);
-    box-shadow: 0 14px 26px rgba(17, 24, 39, 0.22);
+.si-button:active {
+    transform: translateY(1px)
 }
 
-#kc-login.pf-c-button.pf-m-primary:active {
-    transform: translateY(1px);
+.si-label,.si-row {
+    font-size: 13px
 }
 
-/* Footer inside right panel */
+.si-checkbox input {
+    width: 16px;
+    height: 16px
+}
+
+.si-label {
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 6px
+}
+
+.si-input {
+    height: 44px;
+    padding: 0 14px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    font-size: 14px;
+    transition: border-color .15s ease,box-shadow .15s ease
+}
+
+.si-input::placeholder {
+    color: #9ca3af
+}
+
+.si-input:focus {
+    outline: 0;
+    border-color: #94a3b8;
+    box-shadow: 0 0 0 3px rgba(148,163,184,.25)
+}
+
+.si-right {
+    padding: 36px 44px;
+    background: #fff;
+    color: #0f172a;
+    display: flex;
+    flex-direction: column
+}
+
+.si-title {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -.02em
+}
+
+.si-subtitle {
+    margin-top: 6px;
+    margin-bottom: 22px;
+    font-size: 14px;
+    color: #6b7280
+}
+
+.si-row {
+    margin-top: 10px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.si-checkbox,.si-link {
+    font-size: 13px;
+    line-height: 1
+}
+
+.si-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #374151;
+    user-select: none
+}
+
+.si-checkbox input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    vertical-align: middle;
+    accent-color: #111827
+}
+
+.si-link {
+    font-weight: 500;
+    color: #2563eb;
+    text-decoration: none
+}
+
+.si-link:hover {
+    text-decoration: underline
+}
+
+.si-checkbox input[type=checkbox]:focus-visible,.si-link:focus-visible {
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(148,163,184,.35);
+    border-radius: 6px
+}
+
+.si-right .si-row {
+    margin-top: 10px!important;
+    margin-bottom: 18px!important;
+    display: flex!important;
+    align-items: center!important;
+    justify-content: space-between!important
+}
+
+.si-right .si-row .si-checkbox,.si-right .si-row label {
+    display: inline-flex!important;
+    align-items: center!important;
+    gap: 10px!important;
+    font-size: 13px!important;
+    color: #374151!important;
+    line-height: 1!important
+}
+
+.si-right .si-row .si-checkbox {
+    user-select: none!important
+}
+
+.si-right .si-row .si-checkbox input[type=checkbox],.si-right .si-row input[type=checkbox] {
+    width: 16px!important;
+    height: 16px!important;
+    margin: 0!important;
+    vertical-align: middle!important;
+    accent-color: #111827
+}
+
+.si-right .si-row .si-link,.si-right .si-row a {
+    font-size: 13px!important;
+    font-weight: 500!important;
+    color: #2563eb!important;
+    text-decoration: none!important;
+    line-height: 1!important
+}
+
+.si-right .si-row .si-link:hover,.si-right .si-row a:hover {
+    text-decoration: underline!important
+}
+
+.si-right .si-row label {
+    margin: 0!important;
+    cursor: pointer
+}
+
+.si-right .si-row a:focus-visible,.si-right .si-row input[type=checkbox]:focus-visible {
+    outline: 0!important;
+    box-shadow: 0 0 0 3px rgba(148,163,184,.35)!important;
+    border-radius: 6px
+}
+
+.si-wrap {
+    width: min(800px,96vw)!important;
+    grid-template-columns: 1fr 1.2fr!important
+}
+
+.si-left {
+    padding: 24px 22px!important
+}
+
+.si-hero {
+    max-width: 520px!important;
+    max-height: 420px!important;
+    margin: 6px auto 0!important
+}
+
+.si-left .si-brand,.si-left .si-tagline {
+    margin-top: 0!important
+}
+
+.si-left-text {
+    text-align: left;
+    max-width: 260px
+}
+
+.si-left-title {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    color: #4b5563
+}
+
+.si-left-subtitle {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #6b7280
+}
+
+.si-right {
+    padding-top: 64px
+}
+
+.si-left-text {
+    margin-top: 24px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #6b7280;
+    font-weight: 400
+}
+
 .si-footer {
-    margin-top: auto;
+    margin-top: 32px;
     padding-top: 16px;
-    border-top: 1px solid var(--border);
-    text-align: center;
-    color: var(--muted);
-    font-size: 16px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 12px;
+    color: #9ca3af;
+    text-align: center
 }
 
-/* Responsive: stack panels */
-@media (max-width: 980px) {
-    .card-pf.si-card {
-        grid-template-columns: 1fr;
-    }
-    .si-left {
-        border-right: 0;
-        border-bottom: 1px solid var(--border);
-    }
-    .si-right {
-        padding: 34px 22px 22px;
-    }
-    #kc-page-title {
-        font-size: 32px;
-    }
+.si-hero,.si-left {
 }
+
+.si-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start
+}
+
+/* LEFT PANEL: remove "fake padding" caused by centering/grid/gap */
+.si-left{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;  /* ne centriraj, kao u referenci */
+    justify-content: flex-start !important;
+    gap: 0 !important;                  /* makni dodatni razmak između elemenata */
+    padding: 20px 28px 22px !important; /* realno manji padding */
+}
+
+/* Make hero larger and not constrained by margins */
+.si-hero{
+    width: 100% !important;
+    max-width: 440px !important;  /* povećaj, ali realno u 1/2 kartice */
+    height: auto !important;
+    margin: 14px 0 18px 0 !important;   /* nema auto-centering */
+}
+
+/* Optional: keep the left text closer to image */
+.si-left-text{
+    margin-top: 0 !important;
+    max-width: 280px !important;
+}
+
